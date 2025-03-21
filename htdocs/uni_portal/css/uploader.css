@@ -1,0 +1,90 @@
+.uploader-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 16px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  background-color: #13161480;
+  box-shadow: 0 12px 18px -8px #0008;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 20px;
+
+  .info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .title {
+      font-size: 14px;
+    }
+  }
+
+  input,
+  textarea,
+  select {
+    box-shadow: none;
+    color: var(--gray-40);
+    width: 100%;
+    outline: 0;
+    border: 0;
+    border-radius: 8px;
+    padding: 6px 8px;
+    box-sizing: border-box;
+    background-color: hsl(from var(--gray-40) h s l / 0.2);
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  input[type="file"] {
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+
+  .custom-file-upload {
+    margin-top: 6px;
+    background-color: hsl(from var(--gray-40) h s l / 0.2);
+    border: 2px dashed var(--gray-40);
+    border-radius: 8px;
+    display: inline-block;
+    padding: 20px 12px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+  }
+
+  .submit-wrapper {
+    display: flex;
+    padding: 14px 0 0;
+    border-top: solid 1px var(--background-primary-color);
+    justify-content: center;
+    align-items: end;
+
+    .cta-button {
+      padding: 8px 10px 6px;
+      background-color: var(--background-secondary-color);
+      border-radius: 4px;
+      box-shadow: none;
+      border: solid 1px var(--background-primary-color);
+      color: var(--gray-40);
+      font-size: 14px;
+      cursor: pointer;
+      transition: color 0.3s ease, background-color 0.3s ease;
+
+      &:hover {
+        background-color: var(--background-primary-color);
+        color: var(--text-color);
+      }
+    }
+  }
+}
