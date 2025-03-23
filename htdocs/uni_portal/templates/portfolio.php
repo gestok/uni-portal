@@ -16,7 +16,7 @@ try {
         ORDER BY l.title, a.id";
 
   $stmt = $pdo->prepare($sql);
-  $stmt->execute([$_SESSION['user_id'], $_SESSION['user_id']]);
+  $stmt->execute([getUserId(), getUserId()]);
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   // Ομαδοποίηση δεδομένων
@@ -64,7 +64,7 @@ try {
     <span class="title user-select-none pe-none">Μάθημα</span>
 
     <!-- Νέα Υποβολή -->
-    <a href="<?php echo $base_url ?>/uploader"
+    <a href="<?php echo BASE_URL; ?>/uploader"
        class="upload-btn user-select-none">
       <i class="fas fa-upload icon"></i>
       <span>Νέα υποβολή</span>
@@ -101,7 +101,7 @@ try {
             foreach ($lesson['assignments'] as $assignment): ?>
               <div class="work-wrapper <?php echo $index % 2 === 0 ? 'even' : 'odd'; ?>">
                 <!-- Thumbnail -->
-                <img src="<?php echo $base_url . '/uploads/thumbnails/' . $assignment['assignment']['thumbnail']; ?>"
+                <img src="<?php echo BASE_URL . '/uploads/thumbnails/' . $assignment['assignment']['thumbnail']; ?>"
                      class="thumbnail user-select-none pe-none" />
 
                 <!-- Πληροφορίες Εργασίας -->
@@ -130,18 +130,13 @@ try {
                         <?php echo htmlspecialchars($assignment['submission']['description']); ?>
                       </div>
 
-                      <!-- Στατιστικά Υποβολής -->
-                      <div class="meta">
-                        <span>Υποβλήθηκε: <?php echo date('d/m/Y H:i', strtotime($assignment['submission']['date'])); ?></span>
-                      </div>
-
                       <!-- Κατάσταση -->
                       <span class="status <?php echo $submission['status']; ?>">
-                        <?php echo $assignment['submission']['status'] === 'submitted' ? 'Υποβλήθηκε' : ($assignment['submission']['status'] === 'graded' ? 'Βαθμολογήθηκε: ' . $assignment['submission']['grade'] : 'Σε εξέλιξη'); ?>
+                        <?php echo $assignment['submission']['status'] === 'submitted' ? ('Υποβλήθηκε ' . date('d/m/Y H:i', strtotime($assignment['submission']['date']))) : ($assignment['submission']['status'] === 'graded' ? 'Βαθμολογήθηκε: ' . $assignment['submission']['grade'] : 'Σε εξέλιξη'); ?>
                       </span>
 
                       <!-- Λήψη -->
-                      <a href="<?php echo $base_url . $assignment['submission']['file']; ?>"
+                      <a href="<?php echo BASE_URL . $assignment['submission']['file']; ?>"
                          download
                          class="download user-select-none">
                         <!-- Εικονίδιο -->

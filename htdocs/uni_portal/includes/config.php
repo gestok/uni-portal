@@ -1,19 +1,16 @@
 <?php
+/*
+ * Το παρόν αρχείο περιέχει ρυθμίσεις και σταθερές για την εφαρμογή.
+ * Συμπεριλαμβάνει τη σύνδεση στη βάση δεδομένων και άλλες ρυθμίσεις.
+ * Επίσης ξεκινά μια συνεδρία για την αποθήκευση πληροφοριών χρήστη.
+ */
 session_start();
 
-// Base URL
-$base_url = 'http://localhost/uni_portal';
+// URL βάσης της εφαρμογής
+const BASE_URL = 'http://localhost/uni_portal';
 
 // Database configuration
 const DB_HOST = 'localhost';
 const DB_NAME = 'chondromatidis';
 const DB_USER = 'root';
 const DB_PASS = '';
-
-// Routing
-$url = isset($_GET['url']) ? rtrim($_GET['url'], '/') : 'home';
-$segments = explode('/', $url);
-$current_page = !empty($segments[0]) ? $segments[0] : 'home';
-
-// Error handling
-$error = '';

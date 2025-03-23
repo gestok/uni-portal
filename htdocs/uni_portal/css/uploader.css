@@ -8,7 +8,6 @@
   background-color: #13161480;
   box-shadow: 0 12px 18px -8px #0008;
   border-radius: 10px;
-  overflow: hidden;
   padding: 20px;
 
   .info-wrapper {
@@ -60,11 +59,12 @@
     width: 100%;
     box-sizing: border-box;
     text-align: center;
-    position: relative;
   }
 
   .submit-wrapper {
     display: flex;
+    flex-flow: row wrap;
+    gap: 8px;
     padding: 14px 0 0;
     border-top: solid 1px var(--background-primary-color);
     justify-content: center;

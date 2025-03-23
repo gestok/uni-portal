@@ -5,12 +5,12 @@ $profile = [];
 try {
   // Φόρτωση στοιχείων προφίλ από τη βάση δεδομένων
   $stmt = $pdo->prepare("SELECT * FROM profiles WHERE user_id = ?");
-  $stmt->execute([$_SESSION['user_id']]);
+  $stmt->execute([getUserId()]);
   $profile = $stmt->fetch(PDO::FETCH_ASSOC);
 
   // Φόρτωση email από τη βάση δεδομένων
   $stmt = $pdo->prepare("SELECT email FROM users WHERE id = ?");
-  $stmt->execute([$_SESSION['user_id']]);
+  $stmt->execute([getUserId()]);
   $profile['email'] = $stmt->fetchColumn();
 } catch (PDOException $e) {
   $error = "Σφάλμα φόρτωσης προφίλ: " . $e->getMessage();
@@ -48,7 +48,7 @@ if (isPostRequest() && isset($_POST['save_profile'])) {
             youtube = VALUES(youtube)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
-      $_SESSION['user_id'],
+      getUserId(),
       $fullname,
       $job,
       $mobile,
@@ -62,13 +62,11 @@ if (isPostRequest() && isset($_POST['save_profile'])) {
     // Ενημέρωση του email στο users table
     $sql = "UPDATE users SET email = ? WHERE id = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$email, $_SESSION['user_id']]);
+    $stmt->execute([$email, getUserId()]);
 
     // Ενημέρωση μηνύματος επιτυχίας και ανακατεύθυνση
-    $_SESSION['success'] = "Τα στοιχεία αποθηκεύτηκαν επιτυχώς!";
-    header("Location: " . $base_url . "/profile");
-    exit();
-
+    setSuccess("Τα στοιχεία αποθηκεύτηκαν επιτυχώς!");
+    redirectTo(BASE_URL . "/profile");
   } catch (PDOException $e) {
     $error = "Σφάλμα αποθήκευσης: " . $e->getMessage();
   }
@@ -77,21 +75,10 @@ if (isPostRequest() && isset($_POST['save_profile'])) {
 
 <main class="container profile-page">
   <form method="post"
-        class="profile-wrapper">
-    <!-- Μήνυμα επιτυχίας -->
-    <?php if (isset($_SESSION['success'])): ?>
-      <div class="success-message">
-        <?php echo $_SESSION['success']; ?>
-        <?php unset($_SESSION['success']); ?>
-      </div>
-    <?php endif; ?>
+        class="profile-wrapper position-relative">
 
-    <!-- Μήνυμα σφάλματος -->
-    <?php if ($error): ?>
-      <div class="error-message">
-        <?php echo $error; ?>
-      </div>
-    <?php endif; ?>
+    <!-- Notification -->
+    <?php include_once 'templates/notification.php'; ?>
 
     <!-- Βασικά Στοιχεία -->
     <div class="basic-wrapper">

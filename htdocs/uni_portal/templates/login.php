@@ -1,11 +1,11 @@
 <?php
 if (isPostRequest() && isset($_POST['login'])) {
-  $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-  $password = $_POST['password'];
+  $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING) ?? '';
+  $password = $_POST['password'] ?? '';
 
   // Βασικό server validation
-  if (empty($username) || empty($password)) {
-    $error = "Συμπληρώστε όλα τα πεδία";
+  if (!$username || !$password) {
+    setError("Συμπληρώστε όλα τα πεδία");
   } else {
     try {
       // SQL ερώτημα για την αναζήτηση του χρήστη με βάση το username
@@ -19,28 +19,21 @@ if (isPostRequest() && isset($_POST['login'])) {
         echo "<script>console.log('_SESSION');</script>";
 
         // Αποθήκευση στοιχείων χρήστη σε session
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['role'] = $user['role'];
-        $_SESSION['username'] = $user['username'];
+        setUserId($user['id']);
+        setUserRole($user['role']);
 
+        setSuccess("Επιτυχής είσοδος!");
         // Ανακατεύθυνση
-        header("Location: $base_url");
-        exit();
+        redirectTo(BASE_URL);
       } else {
-        $error = "Λάθος email ή κωδικός";
+        setError("Λάθος email ή κωδικός");
       }
     } catch (PDOException $e) {
-      $error = "Σφάλμα σύνδεσης: " . $e->getMessage();
+      setError("Σφάλμα σύνδεσης. Δοκιμάστε ξανά αργότερα.");
     }
   }
 }
 ?>
-
-
-<?php if (!empty($error)): ?>
-  <div class="error-message"><?php echo $error; ?></div>
-<?php endif; ?>
 
 <!-- Wrapper -->
 <main class="container login">
@@ -48,9 +41,9 @@ if (isPostRequest() && isset($_POST['login'])) {
   <h1 class="title text-center">Είσοδος Χρήστη</h1>
 
   <!-- Form -->
-  <form action="<?php echo $base_url ?>/login"
+  <form action="<?php echo BASE_URL; ?>/login"
         method="post"
-        class="login-wrapper">
+        class="login-wrapper position-relative">
 
     <!-- Username -->
     <div class="info-wrapper">
@@ -84,12 +77,15 @@ if (isPostRequest() && isset($_POST['login'])) {
         Είσοδος
       </button>
     </div>
+
+    <!-- Notification -->
+    <?php include_once 'templates/notification.php'; ?>
   </form>
 
   <!-- Register Link -->
-  <div class="register-link text-center mt-4">
+  <div class="register-link text-center mt-5">
     <span>Δεν έχετε λογαριασμό;</span>
-    <a href="<?php echo $base_url ?>/register">
+    <a href="<?php echo BASE_URL; ?>/register">
       Εγγραφείτε εδώ.
     </a>
   </div>

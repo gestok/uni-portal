@@ -1,5 +1,5 @@
 <!-- Main -->
-<main class="container home">
+<main class="container home position-relative">
 
   <!-- Title -->
   <div class="title mt-4 text-center">
@@ -14,28 +14,31 @@
   <!-- Images -->
   <div class="cards-wrapper">
     <img class="card"
-         src="<?php echo $base_url ?>/images/image1.jpg" />
+         src="<?php echo BASE_URL; ?>/static/image1.jpg" />
     <img class="card"
-         src="<?php echo $base_url ?>/images/image2.jpg" />
+         src="<?php echo BASE_URL; ?>/static/image2.jpg" />
     <img class="card"
-         src="<?php echo $base_url ?>/images/image3.jpg" />
+         src="<?php echo BASE_URL; ?>/static/image3.jpg" />
   </div>
 
   <!-- Buttons (εμφανίζεται μόνο σε μη συνδεδεμένους χρήστες) -->
-  <?php if (!isset($_SESSION['user_id'])): ?>
+  <?php if (!isLoggedIn()): ?>
     <div class="button-wrapper">
 
       <!-- Login -->
-      <a href="<?php echo $base_url ?>/login"
+      <a href="<?php echo BASE_URL; ?>/login"
          class="cta-button">
         Είσοδος
       </a>
 
       <!-- Register -->
-      <a href="<?php echo $base_url ?>/register"
+      <a href="<?php echo BASE_URL; ?>/register"
          class="cta-button">
         Εγγραφή
       </a>
     </div>
   <?php endif; ?>
+
+  <!-- Notification -->
+  <?php include_once 'templates/notification.php'; ?>
 </main>

@@ -1,7 +1,13 @@
 <?php
+// Τερματισμός της συνεδρίας
 session_unset();
 session_destroy();
 
-header("Location: $base_url/login");
+// Έναρξη νέας συνεδρίας
+session_start();
 
-exit();
+// Επιτυχής αποσύνδεση
+setSuccess("Έχετε αποσυνδεθεί επιτυχώς.");
+
+// Ανακατεύθυνση στην σελίδα σύνδεσης
+redirectTo(BASE_URL . "/login");

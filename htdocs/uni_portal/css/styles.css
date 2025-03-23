@@ -47,7 +47,10 @@ a:visited {
   margin-top: calc(4 * var(--margin-step)) !important;
 }
 .mt-4 {
-  margin-top: calc(6 * var(--margin-step)) !important;
+  margin-top: calc(8 * var(--margin-step)) !important;
+}
+.mt-5 {
+  margin-top: calc(12 * var(--margin-step)) !important;
 }
 .mb-1 {
   margin-bottom: var(--margin-step) !important;
@@ -59,7 +62,10 @@ a:visited {
   margin-bottom: calc(4 * var(--margin-step)) !important;
 }
 .mb-4 {
-  margin-bottom: calc(6 * var(--margin-step)) !important;
+  margin-bottom: calc(8 * var(--margin-step)) !important;
+}
+.mb-5 {
+  margin-bottom: calc(12 * var(--margin-step)) !important;
 }
 
 .user-select-none {
@@ -72,6 +78,10 @@ a:visited {
 
 .text-center {
   text-align: center !important;
+}
+
+.position-relative {
+  position: relative !important;
 }
 
 .container {
@@ -254,7 +264,6 @@ footer {
     background: #13161480;
     box-shadow: 0 12px 18px -8px #0008;
     border-radius: 10px;
-    overflow: hidden;
 
     .info-wrapper {
       display: flex;

@@ -1,60 +1,99 @@
 <?php
 require_once 'includes/config.php';
 require_once 'includes/database.php';
+require_once 'includes/helpers.php';
 require_once 'includes/functions.php';
-require_once 'includes/header.php';
+require_once 'includes/queries.php';
 
-// Συμπεριλαμβάνουμε το αντίστοιχο αρχείο PHP με βάση το πρώτο τμήμα της διεύθυνσης URL
-switch ($current_page):
-  // Portfolio
+// Έλεγχος ρόλων πριν την εμφάνιση της σελίδας
+switch (getCurrentPage()):
+  // Portfolio, Uploader, Profile
   case 'portfolio':
-    requireStudent();
-    include 'templates/portfolio.php';
-    break;
-
-  // Uploader
   case 'uploader':
-    requireStudent();
-    include 'templates/uploader.php';
-    break;
-
-  // User Profile
   case 'profile':
     requireStudent();
-    include 'templates/profile.php';
     break;
 
-  // Login
+  // Δημιουργία Εργασίας, Εργασίες, Φοιτητές
+  case 'create':
+  case 'assignments':
+  case 'students':
+    requireTeacher();
+    break;
+
+  // Login, Register
   case 'login':
+  case 'register':
     if (isLoggedIn()) {
-      redirectTo("$base_url/home");
+      redirectTo(BASE_URL . "/home");
     }
-    include 'templates/login.php';
     break;
 
   // Logout
   case 'logout':
     if (!isLoggedIn()) {
-      redirectTo("$base_url/home");
+      redirectTo(BASE_URL . "/home");
     }
+    break;
+endswitch;
+
+// Header
+require_once 'templates/header.php';
+
+// Συμπερίληψη του κατάλληλου template ανάλογα με την τρέχουσα σελίδα
+switch (getCurrentPage()):
+  // Portfolio
+  case 'portfolio':
+    include 'templates/portfolio.php';
+    break;
+
+  // Uploader
+  case 'uploader':
+    include 'templates/uploader.php';
+    break;
+
+  // User Profile
+  case 'profile':
+    include 'templates/profile.php';
+    break;
+
+  // Δημιουργία Εργασίας
+  case 'create':
+    include 'templates/create.php';
+    break;
+
+  // Εργασίες
+  case 'assignments':
+    include 'templates/assignments.php';
+    break;
+
+  // Φοιτητές
+  case 'students':
+    include 'templates/students.php';
+    break;
+
+  // Login
+  case 'login':
+    include 'templates/login.php';
+    break;
+
+  // Logout
+  case 'logout':
     include 'templates/logout.php';
     break;
 
   // Register
   case 'register':
-    if (isLoggedIn()) {
-      redirectTo("$base_url/home");
-    }
     include 'templates/register.php';
     break;
 
   // Home
   case 'home':
-  // Ή αν η σελίδα δεν υπάρχει, επανακατευθύνουμε στην αρχική σελίδα
+  // Ή αν η σελίδα δεν υπάρχει
   default:
     include 'templates/home.php';
     break;
 endswitch;
 
 // Footer
-require_once 'includes/footer.php';
+require_once 'templates/footer.php';

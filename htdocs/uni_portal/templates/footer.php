@@ -6,7 +6,7 @@
 
     <div class="footer-link-wrapper">
       <!-- Terms of Use -->
-      <a href="images/dummy.pdf"
+      <a href="static/dummy.pdf"
          class="footer-link">
         Όροι Χρήσης
       </a>
@@ -15,7 +15,7 @@
       <div class="separator user-select-none pe-none">•</div>
 
       <!-- Privacy Policy -->
-      <a href="images/dummy.pdf"
+      <a href="static/dummy.pdf"
          class="footer-link">
         Πολιτική Απορρήτου
       </a>
@@ -24,14 +24,14 @@
 </footer>
 
 <!-- General Scripts -->
-<script src="<?php echo $base_url ?>/js/scripts.js"></script>
+<script src="<?php echo BASE_URL; ?>/js/scripts.js"></script>
 
 <!-- Specific Scripts -->
-<?php if ($current_page == 'portfolio'): ?>
-  <script src="<?php echo $base_url ?>/js/portfolio.js"></script>
+<?php if (isPage('portfolio')): ?>
+  <script src="<?php echo BASE_URL; ?>/js/portfolio.js"></script>
 <?php endif; ?>
-<?php if ($current_page == 'uploader'): ?>
-  <script src="<?php echo $base_url; ?>/js/uploader.js"></script>
+<?php if (isPage('uploader')): ?>
+  <script src="<?php echo BASE_URL; ?>/js/uploader.js"></script>
 <?php endif; ?>
 
 </body>

@@ -1,7 +1,4 @@
 <?php
-$error = '';
-$success = '';
-
 if (isPostRequest() && isset($_POST['register'])) {
   // Καθαρισμός των inputs
   $username = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
@@ -11,11 +8,15 @@ if (isPostRequest() && isset($_POST['register'])) {
 
   // Βασικός έλεγχος
   if (empty($username) || empty($email) || empty($password)) {
-    $error = "Συμπληρώστε όλα τα υποχρεωτικά πεδία";
+    setError("Συμπληρώστε όλα τα υποχρεωτικά πεδία");
   } elseif ($password !== $confirm_password) {
-    $error = "Οι κωδικοί δεν ταιριάζουν";
-  } elseif (strlen($password) < 8) {
-    $error = "Ο κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες";
+    setError("Οι κωδικοί δεν ταιριάζουν");
+  } elseif (strlen($password) < 10) {
+    setError("Ο κωδικός πρέπει να έχει τουλάχιστον 10 χαρακτήρες");
+  }
+  // Αν ο κωδικός δεν περιέχει τουλάχιστον 1 αριθμό, 1 πεζό γράμμα, 1 κεφαλαίο γράμμα και 1 ειδικό χαρακτήρα (π.χ. !@#$%^&*)
+  elseif (!preg_match('/[0-9]/', $password) || !preg_match('/[a-z]/', $password) || !preg_match('/[A-Z]/', $password) || !preg_match('/[\W_]/', $password)) {
+    setError("Ο κωδικός πρέπει να περιέχει τουλάχιστον 1 αριθμό, 1 πεζό γράμμα, 1 κεφαλαίο γράμμα και 1 ειδικό χαρακτήρα");
   } else {
     try {
       // Έλεγχος αν υπάρχει ήδη ο χρήστης
@@ -23,7 +24,7 @@ if (isPostRequest() && isset($_POST['register'])) {
       $stmt->execute([$username, $email]);
 
       if ($stmt->rowCount() > 0) {
-        $error = "Το username ή email χρησιμοποιείται ήδη";
+        setError("Το username ή email χρησιμοποιείται ήδη");
       } else {
         // Καταχώρηση νέου χρήστη
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -32,11 +33,11 @@ if (isPostRequest() && isset($_POST['register'])) {
         $insert_stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
         $insert_stmt->execute([$username, $email, $hashed_password, $role]);
 
-        $success = "Επιτυχής εγγραφή! Μπορείτε να συνδεθείτε.";
-        header("Refresh: 2; url=" . $base_url . "/login");
+        setSuccess("Επιτυχής εγγραφή! Μπορείτε να συνδεθείτε.");
+        redirectTo(BASE_URL . "/login");
       }
     } catch (PDOException $e) {
-      $error = "Σφάλμα συστήματος: " . $e->getMessage();
+      setError("Σφάλμα κατά την εγγραφή. Δοκιμάστε ξανά.");
     }
   }
 }
@@ -46,16 +47,9 @@ if (isPostRequest() && isset($_POST['register'])) {
 <main class="container register">
   <h1 class="title text-center">Εγγραφή Χρήστη</h1>
 
-  <?php if ($error): ?>
-    <div class="error-message"><?php echo $error; ?></div>
-  <?php endif; ?>
-
-  <?php if ($success): ?>
-    <div class="success-message"><?php echo $success; ?></div>
-  <?php endif; ?>
-
+  <!-- Φόρμα Εγγραφής -->
   <form method="post"
-        class="register-wrapper">
+        class="register-wrapper position-relative">
     <!-- Username -->
     <div class="info-wrapper">
       <div class="title">Όνομα Χρήστη</div>
@@ -114,5 +108,8 @@ if (isPostRequest() && isset($_POST['register'])) {
         Εγγραφή
       </button>
     </div>
+
+    <!-- Notification -->
+    <?php include_once 'templates/notification.php'; ?>
   </form>
 </main>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2025 at 06:44 PM
+-- Generation Time: Mar 23, 2025 at 01:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -56,13 +56,13 @@ INSERT INTO `assignments` (`id`, `lesson_id`, `title`, `description`, `thumbnail
 (11, 3, 'VPN Configuration', 'Εγκαταστήστε και ρυθμίστε έναν OpenVPN server. Θα δημιουργήσετε πιστοποιητικά ασφαλείας, θα ορίσετε παραμέτρους κρυπτογράφησης και θα δοκιμάσετε τη σύνδεση από έναν client.', 'vpn.png', 11, '2025-07-08', '2025-03-19 00:01:37'),
 (12, 3, 'HTTP/2 vs HTTP/3', 'Συγκρίνετε τα πρωτόκολλα HTTP/2 και HTTP/3 ως προς την απόδοση, την αξιοπιστία και τις τεχνολογίες που χρησιμοποιούν (π.χ. multiplexing, QUIC). Θα αναφέρετε πλεονεκτήματα και περιορισμούς κάθε εκδοχής.', 'http.png', 11, '2025-07-18', '2025-03-19 00:01:37'),
 (13, 4, 'Γραμμική Παλινδρόμηση', 'Υλοποιήστε ένα μοντέλο γραμμικής παλινδρόμησης σε Python με βιβλιοθήκες όπως NumPy και scikit-learn. Θα εκπαιδεύσετε το μοντέλο σε δεδομένα, θα αξιολογήσετε την ακρίβειά του και θα οπτικοποιήσετε τα αποτελέσματα.', 'regression.png', 12, '2025-06-22', '2025-03-19 00:01:37'),
-(14, 4, 'Νευρωνικά Δίκτυα', 'Κατασκευάστε ένα νευρωνικό δίκτυο για την ταξινόμηση εικόνων από το MNIST dataset. Θα χρησιμοποιήσετε TensorFlow/Keras, θα ορίσετε layers (Dense, Convolutional) και θα μετρήσετε την απόδοση του μοντέλου.', 'mnist.jpg', 12, '2025-07-02', '2025-03-19 00:01:37'),
-(15, 4, 'Φυσική Γλώσσα', 'Πραγματοποιήστε sentiment analysis σε κείμενο χρησιμοποιώντας τεχνικές επεξεργασίας φυσικής γλώσσας (NLP). Θα εφαρμόσετε tokenization, θα εκπαιδεύσετε ένα μοντέλο (π.χ. με TF-IDF) και θα αναλύσετε συναισθηματικές προδιαγραφές.', 'nlp.jpg', 12, '2025-07-12', '2025-03-19 00:01:37'),
-(16, 4, 'GANs', 'Δημιουργήστε generative εικόνες με Generative Adversarial Networks (GANs). Θα υλοποιήσετε ένα δίκτυο generator και discriminator, θα εκπαιδεύσετε το σύστημα σε ένα dataset και θα παραγάγετε νέες εικόνες.', 'gan.jpg', 12, '2025-07-22', '2025-03-19 00:01:37'),
-(17, 5, 'Binary Trees', 'Υλοποιήστε ένα δυαδικό δέντρο σε Python ή Java. Θα ορίσετε λειτουργίες για εισαγωγή, διαγραφή και αναζήτηση κόμβων, καθώς και για traversals (in-order, pre-order).', 'tree.jpg', 9, '2025-06-17', '2025-03-19 00:01:37'),
-(18, 5, 'Sorting Algorithms', 'Συγκρίνετε αλγορίθμους ταξινόμησης (π.χ. QuickSort, MergeSort, BubbleSort) ως προς την πολυπλοκότητα χρόνου και την απόδοση. Θα υλοποιήσετε τουλάχιστον 2 αλγορίθμους και θα μετρήσετε τον χρόνο εκτέλεσής τους.', 'sort.jpg', 9, '2025-06-27', '2025-03-19 00:01:37'),
-(19, 5, 'Graph Traversal', 'Υλοποιήστε τους αλγορίθμους BFS (Breadth-First Search) και DFS (Depth-First Search) για την διέλευση γράφων. Θα δοκιμάσετε τους αλγορίθμους σε διαφορετικά γραφήματα και θα αναλύσετε τα αποτελέσματα.', 'graph.jpg', 9, '2025-07-07', '2025-03-19 00:01:37'),
-(20, 5, 'Hash Tables', 'Δημιουργήστε μια hash table με open addressing τεχνική (π.χ. linear probing). Θα ορίσετε συναρτήσεις κατακερματισμού, θα χειριστείτε collisions και θα μετρήσετε την απόδοση της δομής.', 'hash.jpg', 9, '2025-07-17', '2025-03-19 00:01:37');
+(14, 4, 'Νευρωνικά Δίκτυα', 'Κατασκευάστε ένα νευρωνικό δίκτυο για την ταξινόμηση εικόνων από το MNIST dataset. Θα χρησιμοποιήσετε TensorFlow/Keras, θα ορίσετε layers (Dense, Convolutional) και θα μετρήσετε την απόδοση του μοντέλου.', 'neural.webp', 12, '2025-07-02', '2025-03-19 00:01:37'),
+(15, 4, 'Φυσική Γλώσσα', 'Πραγματοποιήστε sentiment analysis σε κείμενο χρησιμοποιώντας τεχνικές επεξεργασίας φυσικής γλώσσας (NLP). Θα εφαρμόσετε tokenization, θα εκπαιδεύσετε ένα μοντέλο (π.χ. με TF-IDF) και θα αναλύσετε συναισθηματικές προδιαγραφές.', 'nlp.webp', 12, '2025-07-12', '2025-03-19 00:01:37'),
+(16, 4, 'GANs', 'Δημιουργήστε generative εικόνες με Generative Adversarial Networks (GANs). Θα υλοποιήσετε ένα δίκτυο generator και discriminator, θα εκπαιδεύσετε το σύστημα σε ένα dataset και θα παραγάγετε νέες εικόνες.', 'gan.webp', 12, '2025-07-22', '2025-03-19 00:01:37'),
+(17, 5, 'Binary Trees', 'Υλοποιήστε ένα δυαδικό δέντρο σε Python ή Java. Θα ορίσετε λειτουργίες για εισαγωγή, διαγραφή και αναζήτηση κόμβων, καθώς και για traversals (in-order, pre-order).', 'tree.webp', 9, '2025-06-17', '2025-03-19 00:01:37'),
+(18, 5, 'Sorting Algorithms', 'Συγκρίνετε αλγορίθμους ταξινόμησης (π.χ. QuickSort, MergeSort, BubbleSort) ως προς την πολυπλοκότητα χρόνου και την απόδοση. Θα υλοποιήσετε τουλάχιστον 2 αλγορίθμους και θα μετρήσετε τον χρόνο εκτέλεσής τους.', 'sort.webp', 9, '2025-06-27', '2025-03-19 00:01:37'),
+(19, 5, 'Graph Traversal', 'Υλοποιήστε τους αλγορίθμους BFS (Breadth-First Search) και DFS (Depth-First Search) για την διέλευση γράφων. Θα δοκιμάσετε τους αλγορίθμους σε διαφορετικά γραφήματα και θα αναλύσετε τα αποτελέσματα.', 'graph.webp', 9, '2025-07-07', '2025-03-19 00:01:37'),
+(20, 5, 'Hash Tables', 'Δημιουργήστε μια hash table με open addressing τεχνική (π.χ. linear probing). Θα ορίσετε συναρτήσεις κατακερματισμού, θα χειριστείτε collisions και θα μετρήσετε την απόδοση της δομής.', 'hash.webp', 9, '2025-07-17', '2025-03-19 00:01:37');
 
 -- --------------------------------------------------------
 
@@ -124,7 +124,8 @@ INSERT INTO `profiles` (`user_id`, `fullname`, `job`, `mobile`, `linkedin`, `fac
 (10, 'Ανδρέας Γεωργίου', 'Καθηγητής Βάσεων Δεδομένων', '6923456789', NULL, 'facebook.com/andreas', NULL, NULL, 'twitter.com/andreas_g', '2025-03-19 00:01:37'),
 (11, 'Ευαγγελία Στεφάνου', 'Καθηγήτρια Δικτύων', '6934567890', 'linkedin.com/evangelia', NULL, NULL, 'instagram.com/evangelia_s', NULL, '2025-03-19 00:01:37'),
 (12, 'Μαρία Ιωάννου', 'Καθηγήτρια Τεχνητής Νοημοσύνης', '6945678901', NULL, NULL, 'youtube.com/maria_ai', 'instagram.com/maria_ai', 'twitter.com/maria_ai', '2025-03-19 00:01:37'),
-(13, 'Γιώργος Χ.', 'Developer', '6912323212', '', '', '', '', '', '2025-03-20 19:29:49');
+(17, 'Student', 'EAP', '6988776655', 'linkedin.com/in/student', 'facebook.com/student', '', '', '', '2025-03-22 21:51:08'),
+(18, 'Teacher', 'EAP', '', '', '', '', '', '', '2025-03-22 23:16:32');
 
 -- --------------------------------------------------------
 
@@ -164,11 +165,11 @@ INSERT INTO `student_lessons` (`student_id`, `lesson_id`) VALUES
 (8, 3),
 (8, 4),
 (8, 5),
-(13, 1),
-(13, 2),
-(13, 3),
-(13, 4),
-(13, 5);
+(17, 1),
+(17, 2),
+(17, 3),
+(17, 4),
+(17, 5);
 
 -- --------------------------------------------------------
 
@@ -233,7 +234,8 @@ INSERT INTO `submissions` (`id`, `assignment_id`, `user_id`, `title`, `descripti
 (38, 12, 8, 'HTTP/3 Presentation', 'QUIC protocol analysis', 'uploads/submissions/lesson_8/quic.pdf', '2025-03-19 00:01:37', 88.00, 'graded'),
 (39, 16, 8, 'GAN Art', 'Generated artworks', 'uploads/submissions/lesson_8/artgan.pdf', '2025-03-19 00:01:37', 79.50, 'graded'),
 (40, 20, 8, 'Hash Collisions', 'Επίλυση collisions', 'uploads/submissions/lesson_8/hash.pdf', '2025-03-19 00:01:37', 85.00, 'graded'),
-(41, 1, 13, 'Recreating Spotify in HTML/CSS', 'Spotify mockup in HTML/CSS με νέο αρχείο!', 'D:\\xampp2\\htdocs\\uni_portal/uploads/submissions/lesson_1/67dd91694ca51_spotify.pdf', '2025-03-21 16:18:49', NULL, 'submitted');
+(41, 1, 17, 'Recreating Spotify', 'Spotify mockup in HTML/CSS!!', 'uploads/submissions/lesson_1/67df27f4b5a3d_spotify.pdf', '2025-03-22 21:27:19', NULL, 'submitted'),
+(42, 7, 17, 'Normalization Assignment', 'The assignment for normalization homework.', 'uploads/submissions/lesson_2/67df12f0c2d31_spotify.pdf', '2025-03-22 19:44:57', NULL, 'submitted');
 
 -- --------------------------------------------------------
 
@@ -289,7 +291,8 @@ INSERT INTO `users` (`id`, `email`, `username`, `password`, `role`, `created_at`
 (10, 'teacher2@uni.gr', 'teacher2', '560d4d8b173df72e813f0f1914aeb5df3240b53457000c55a1baa84fc389fa1e', 'teacher', '2025-03-18 23:53:51'),
 (11, 'teacher3@uni.gr', 'teacher3', '560d4d8b173df72e813f0f1914aeb5df3240b53457000c55a1baa84fc389fa1e', 'teacher', '2025-03-18 23:53:51'),
 (12, 'teacher4@uni.gr', 'teacher4', '560d4d8b173df72e813f0f1914aeb5df3240b53457000c55a1baa84fc389fa1e', 'teacher', '2025-03-18 23:53:51'),
-(13, 'george@gmail.com', 'test', '$2y$10$kovDXbXR6PgcGVzJqoT9Ke0uG8q219zvpE/pteAoMqXL53ioJr6Pu', 'student', '2025-03-19 18:06:10');
+(17, 'student@student.gr', 'Student1!1', '$2y$10$rC/f2KiOMv8uazmXfVkt2u.i/G7hAzPH6fW8bqD5EsMH7it.8Cptq', 'student', '2025-03-22 21:45:42'),
+(18, 'teacher@teacher.gr', 'Teacher1!1', '$2y$10$RSe1.8U2H2lnlXfI7/ktP.kps2yi8BBvThm6MjdTgh2SxbkBHRab2', 'teacher', '2025-03-22 23:14:30');
 
 --
 -- Indexes for dumped tables
@@ -371,13 +374,13 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
