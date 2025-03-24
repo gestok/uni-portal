@@ -83,3 +83,118 @@ function uploadSubmission($submission, $file): void
     setError("Σφάλμα κατά την υποβολή της εργασίας.");
   }
 }
+
+/**
+ * Η συνάρτηση δέχεται μια νέα εργασία και την αποθηκεύει στη βάση δεδομένων.
+ */
+function uploadAssignment($assignment): void
+{
+  // Αν δεν υπάρχουν απαιτούμενα πεδία, σταματάμε την εκτέλεση.
+  if (
+    !getUserId() || !isset($assignment) || !isset($assignment['lesson_id']) ||
+    !isset($assignment['title']) || !isset($assignment['description']) ||
+    !isset($assignment['deadline']) || !isset($assignment['thumbnail'])
+  ) {
+    setError("Λάθος δεδομένα υποβολής.");
+    return;
+  }
+
+  if (!$assignment['thumbnail']['tmp_name']) {
+    setError("Απαιτείται ανέβασμα εικόνας.");
+    return;
+  }
+
+  if (mime_content_type($assignment['thumbnail']['tmp_name']) != 'image/jpeg' && mime_content_type($assignment['thumbnail']['tmp_name']) != 'image/png') {
+    setError("Μόνο αρχεία JPEG και PNG επιτρέπονται.");
+    return;
+  }
+
+  $file_name = getUniqueFileName($assignment['thumbnail']);
+  $upload_dir = dirname(__DIR__) . '/uploads/thumbnails';
+
+  // Δημιουργία φακέλου μεταφόρτωσης αν δεν υπάρχει.
+  if (!is_dir($upload_dir)) {
+    mkdir($upload_dir, 0777, true);
+  }
+
+  if (!move_uploaded_file($assignment['thumbnail']['tmp_name'], "$upload_dir/$file_name")) {
+    setError("Σφάλμα κατά την αποθήκευση της εικόνας.");
+    return;
+  }
+
+  // Ενημέρωση μονοπατιού εικόνας.
+  $assignment['thumbnail'] = $file_name;
+
+  if (insertAssignment($assignment)) {
+    setSuccess("Η εργασία δημιουργήθηκε επιτυχώς.");
+  } else {
+    setError("Σφάλμα κατά την δημιουργία της εργασίας.");
+  }
+}
+
+/**
+ * Επιστρέφει όλα τα στοιχεία ενός φοιτητή με το δοθέν ID.
+ * Δομή επιστροφής: array με κλειδιά 'profile', 'lessons', 'submissions'
+ * 
+ * Αν προκύψει σφάλμα, θέτει το κατάλληλο μήνυμα σφάλματος και επιστρέφει null.
+ */
+function getStudentDetails(int|string $studentId = null): ?array
+{
+  if (!isset($studentId)) {
+    return null;
+  }
+
+  // Φόρτωση προφίλ φοιτητή
+  $profile = getStudentProfile($studentId);
+  if (!$profile && $studentId) {
+    setError("Σφάλμα φόρτωσης προφίλ φοιτητή.");
+    return null;
+  }
+
+  // Φόρτωση εγγεγραμμένων μαθημάτων
+  $lessons = getStudentEnrolledLessons($studentId);
+  if ($lessons === null && $studentId) {
+    setError("Σφάλμα φόρτωσης μαθημάτων φοιτητή.");
+    return null;
+  }
+
+  // Φόρτωση υποβολών
+  $submissions = getStudentSubmissions($studentId);
+  if ($submissions === null && $studentId) {
+    setError("Σφάλμα φόρτωσης υποβολών φοιτητή.");
+    return null;
+  }
+
+  // Επιστροφή συγκεντρωμένων στοιχείων
+  return [
+    'profile' => $profile,
+    'lessons' => $lessons,
+    'submissions' => $submissions
+  ];
+}
+
+/**
+ * Επιστρέφει το προφίλ του χρήστη.
+ * 
+ * Αν προκύψει σφάλμα, θέτει το κατάλληλο μήνυμα σφάλματος και επιστρέφει null.
+ */
+function getUserProfile(): mixed
+{
+  return getUserData() ?: [];
+}
+
+/**
+ * Αποθηκεύει τα στοιχεία του χρήστη στη βάση δεδομένων.
+ * 
+ * Αν προκύψει σφάλμα, θέτει το κατάλληλο μήνυμα σφάλματος και επιστρέφει false.
+ */
+function saveUserProfile($profileData): bool
+{
+  if (saveUserData($profileData) && updateUserEmail($profileData['email'])) {
+    setSuccess("Τα στοιχεία αποθηκεύτηκαν επιτυχώς!");
+    return true;
+  } else {
+    setError("Σφάλμα αποθήκευσης. Δοκιμάστε ξανά.");
+    return false;
+  }
+}

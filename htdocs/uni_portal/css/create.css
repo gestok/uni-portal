@@ -1,0 +1,185 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.wrapper .info-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 20px;
+}
+
+.wrapper .info-wrapper .metadata-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  flex-grow: 1;
+}
+
+.lessons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 15px;
+  background-color: var(--gray-80);
+  border: 1px solid var(--gray-70);
+  border-radius: 20px;
+  padding: 5px;
+}
+
+.lessons .selected {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--gray-30);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.lessons select {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+}
+
+.lessons .prev,
+.lessons .next {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  margin: 0;
+  border: 0;
+  border-radius: 16px;
+  background-color: var(--gray-70);
+  color: var(--gray-40);
+  font-size: 20px;
+  transition: 0.2s all ease;
+  cursor: pointer;
+}
+
+.lessons .prev:hover,
+.lessons .next:hover {
+  color: var(--gray-10);
+  background-color: var(--gray-60);
+}
+
+.upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 250px;
+  height: 250px;
+  background-color: var(--gray-80);
+  border: 1px dashed var(--gray-70);
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+}
+
+.upload-wrapper input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: -1;
+}
+
+.upload-wrapper .preview {
+  color: var(--gray-60);
+  font-size: 14px;
+  line-height: 22px;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.upload-wrapper .preview img {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
+.lesson-title,
+.lesson-description,
+.deadline {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--gray-30);
+  background-color: var(--gray-80);
+  padding: 0;
+  border: 1px solid var(--gray-70);
+  border-radius: 20px;
+  padding: 14px 20px;
+  font-size: 18px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.lesson-description {
+  font-size: 14px;
+  resize: none;
+  white-space: unset;
+}
+
+.lesson-title:focus,
+.lesson-description:focus {
+  outline: 0;
+  border-color: var(--gray-50);
+}
+
+.deadline {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  column-gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.deadline .title {
+  font-size: 14px;
+  color: var(--gray-60);
+}
+
+.deadline .date-picker {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  flex-grow: 1;
+  background-color: transparent;
+  border: 0;
+  color: var(--gray-40);
+  font-size: 14px;
+  outline: 0;
+}
+
+.deadline .date-picker::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}

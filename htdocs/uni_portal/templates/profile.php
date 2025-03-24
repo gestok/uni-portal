@@ -1,195 +1,114 @@
 <?php
-
-// Φόρτωση προφίλ χρήστη
-$profile = [];
-try {
-  // Φόρτωση στοιχείων προφίλ από τη βάση δεδομένων
-  $stmt = $pdo->prepare("SELECT * FROM profiles WHERE user_id = ?");
-  $stmt->execute([getUserId()]);
-  $profile = $stmt->fetch(PDO::FETCH_ASSOC);
-
-  // Φόρτωση email από τη βάση δεδομένων
-  $stmt = $pdo->prepare("SELECT email FROM users WHERE id = ?");
-  $stmt->execute([getUserId()]);
-  $profile['email'] = $stmt->fetchColumn();
-} catch (PDOException $e) {
-  $error = "Σφάλμα φόρτωσης προφίλ: " . $e->getMessage();
-}
-
 // Επεξεργασία υποβολής φόρμας
 if (isPostRequest() && isset($_POST['save_profile'])) {
-  // Ονοματεπώνυμο
-  $fullname = trim(filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_STRING));
-  // Επαγγελματική ιδιότητα
-  $job = trim(filter_input(INPUT_POST, 'job', FILTER_SANITIZE_STRING));
-  // Email
-  $email = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
-  // Τηλέφωνο
-  $mobile = trim(filter_input(INPUT_POST, 'mobile', FILTER_SANITIZE_STRING));
-  // Social Media Links
-  $facebook = trim(filter_input(INPUT_POST, 'facebook', FILTER_SANITIZE_URL));
-  $twitter = trim(filter_input(INPUT_POST, 'twitter', FILTER_SANITIZE_URL));
-  $linkedin = trim(filter_input(INPUT_POST, 'linkedin', FILTER_SANITIZE_URL));
-  $instagram = trim(filter_input(INPUT_POST, 'instagram', FILTER_SANITIZE_URL));
-  $youtube = trim(filter_input(INPUT_POST, 'youtube', FILTER_SANITIZE_URL));
+  $profileData = [
+    'fullname' => $_POST['fullname'] ?? '',
+    'job' => $_POST['job'] ?? '',
+    'email' => $_POST['email'] ?? '',
+    'mobile' => $_POST['mobile'] ?? '',
+    'facebook' => $_POST['facebook'] ?? '',
+    'twitter' => $_POST['twitter'] ?? '',
+    'linkedin' => $_POST['linkedin'] ?? '',
+    'instagram' => $_POST['instagram'] ?? '',
+    'youtube' => $_POST['youtube'] ?? ''
+  ];
 
-  try {
-    // Ενημέρωση των στοιχείων στο profiles table ή εισαγωγή αν δεν υπάρχει
-    $sql = "INSERT INTO profiles (user_id, fullname, job, mobile, facebook, twitter, linkedin, instagram, youtube)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE
-            fullname = VALUES(fullname),
-            job = VALUES(job),
-            mobile = VALUES(mobile),
-            facebook = VALUES(facebook),
-            twitter = VALUES(twitter),
-            linkedin = VALUES(linkedin),
-            instagram = VALUES(instagram),
-            youtube = VALUES(youtube)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-      getUserId(),
-      $fullname,
-      $job,
-      $mobile,
-      $facebook,
-      $twitter,
-      $linkedin,
-      $instagram,
-      $youtube
-    ]);
-
-    // Ενημέρωση του email στο users table
-    $sql = "UPDATE users SET email = ? WHERE id = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$email, getUserId()]);
-
-    // Ενημέρωση μηνύματος επιτυχίας και ανακατεύθυνση
-    setSuccess("Τα στοιχεία αποθηκεύτηκαν επιτυχώς!");
-    redirectTo(BASE_URL . "/profile");
-  } catch (PDOException $e) {
-    $error = "Σφάλμα αποθήκευσης: " . $e->getMessage();
-  }
+  saveUserProfile($profileData);
 }
+// Φόρτωση προφίλ χρήστη
+$profile = getUserProfile();
 ?>
 
-<main class="container profile-page">
+<main class="container mt-3 mb-3">
   <form method="post"
-        class="profile-wrapper position-relative">
+        class="profile-wrapper">
 
-    <!-- Notification -->
-    <?php include_once 'templates/notification.php'; ?>
+    <!-- Ονοματεπώνυμο -->
+    <label class="input-wrapper">
+      <i class="icon fas fa-user"></i>
+      <input type="text"
+             name="fullname"
+             value="<?php echo htmlspecialchars($profile['fullname'] ?? ''); ?>"
+             placeholder="Ονοματεπώνυμο" />
+    </label>
 
-    <!-- Βασικά Στοιχεία -->
-    <div class="basic-wrapper">
+    <!-- Επαγγελματική Ιδιότητα -->
+    <label class="input-wrapper">
+      <i class="icon fas fa-graduation-cap"></i>
+      <input type="text"
+             name="job"
+             value="<?php echo htmlspecialchars($profile['job'] ?? ''); ?>"
+             placeholder="Επαγγελματική ιδιότητα" />
+    </label>
 
-      <!-- Τίτλος -->
-      <div class="title">Βασικά Στοιχεία</div>
+    <!-- Email -->
+    <label class="input-wrapper">
+      <i class="icon fas fa-envelope"></i>
+      <input type="email"
+             name="email"
+             value="<?php echo htmlspecialchars($profile['email'] ?? ''); ?>"
+             placeholder="Email" />
+    </label>
 
-      <!-- Φόρμα -->
-      <div class="inputs-wrapper">
+    <!-- Τηλέφωνο -->
+    <label class="input-wrapper">
+      <i class="icon fas fa-phone"></i>
+      <input type="tel"
+             name="mobile"
+             value="<?php echo htmlspecialchars($profile['mobile'] ?? ''); ?>"
+             placeholder="Τηλέφωνο" />
+    </label>
 
-        <!-- Ονοματεπώνυμο -->
-        <div class="input-wrapper">
-          <i class="fas fa-user"></i>
-          <input type="text"
-                 name="fullname"
-                 value="<?php echo htmlspecialchars($profile['fullname'] ?? ''); ?>"
-                 placeholder="Ονοματεπώνυμο" />
-        </div>
+    <!-- Facebook -->
+    <label class="input-wrapper">
+      <i class="icon fab fa-facebook-f"></i>
+      <input type="text"
+             name="facebook"
+             value="<?php echo htmlspecialchars($profile['facebook'] ?? ''); ?>"
+             placeholder="URL Facebook" />
+    </label>
 
-        <!-- Επαγγελματική Ιδιότητα -->
-        <div class="input-wrapper">
-          <i class="fas fa-graduation-cap"></i>
-          <input type="text"
-                 name="job"
-                 value="<?php echo htmlspecialchars($profile['job'] ?? ''); ?>"
-                 placeholder="Επαγγελματική ιδιότητα" />
-        </div>
+    <!-- Twitter -->
+    <label class="input-wrapper">
+      <i class="icon fab fa-twitter"></i>
+      <input type="text"
+             name="twitter"
+             value="<?php echo htmlspecialchars($profile['twitter'] ?? ''); ?>"
+             placeholder="URL Twitter/X" />
+    </label>
 
-        <!-- Email -->
-        <div class="input-wrapper">
-          <i class="fas fa-envelope"></i>
-          <input type="email"
-                 name="email"
-                 value="<?php echo htmlspecialchars($profile['email'] ?? ''); ?>"
-                 placeholder="Email" />
-        </div>
+    <!-- LinkedIn -->
+    <label class="input-wrapper">
+      <i class="icon fab fa-linkedin-in"></i>
+      <input type="text"
+             name="linkedin"
+             value="<?php echo htmlspecialchars($profile['linkedin'] ?? ''); ?>"
+             placeholder="URL LinkedIn" />
+    </label>
 
-        <!-- Τηλέφωνο -->
-        <div class="input-wrapper">
-          <i class="fas fa-phone"></i>
-          <input type="tel"
-                 name="mobile"
-                 value="<?php echo htmlspecialchars($profile['mobile'] ?? ''); ?>"
-                 placeholder="Τηλέφωνο" />
-        </div>
-      </div>
-    </div>
+    <!-- Instagram -->
+    <label class="input-wrapper">
+      <i class="icon fab fa-instagram"></i>
+      <input type="text"
+             name="instagram"
+             value="<?php echo htmlspecialchars($profile['instagram'] ?? ''); ?>"
+             placeholder="URL Instagram" />
+    </label>
 
-    <!-- Social Media -->
-    <div class="social-wrapper mt-3">
-
-      <!-- Τίτλος -->
-      <div class="title">Social</div>
-
-      <!-- Φόρμα -->
-      <div class="inputs-wrapper">
-
-        <!-- Facebook -->
-        <div class="input-wrapper">
-          <i class="fab fa-facebook-f"></i>
-          <input type="text"
-                 name="facebook"
-                 value="<?php echo htmlspecialchars($profile['facebook'] ?? ''); ?>"
-                 placeholder="URL Facebook" />
-        </div>
-
-        <!-- Twitter -->
-        <div class="input-wrapper">
-          <i class="fab fa-twitter"></i>
-          <input type="text"
-                 name="twitter"
-                 value="<?php echo htmlspecialchars($profile['twitter'] ?? ''); ?>"
-                 placeholder="URL Twitter/X" />
-        </div>
-
-        <!-- LinkedIn -->
-        <div class="input-wrapper">
-          <i class="fab fa-linkedin-in"></i>
-          <input type="text"
-                 name="linkedin"
-                 value="<?php echo htmlspecialchars($profile['linkedin'] ?? ''); ?>"
-                 placeholder="URL LinkedIn" />
-        </div>
-
-        <!-- Instagram -->
-        <div class="input-wrapper">
-          <i class="fab fa-instagram"></i>
-          <input type="text"
-                 name="instagram"
-                 value="<?php echo htmlspecialchars($profile['instagram'] ?? ''); ?>"
-                 placeholder="URL Instagram" />
-        </div>
-
-        <!-- YouTube -->
-        <div class="input-wrapper">
-          <i class="fab fa-youtube"></i>
-          <input type="text"
-                 name="youtube"
-                 value="<?php echo htmlspecialchars($profile['youtube'] ?? ''); ?>"
-                 placeholder="URL Youtube" />
-        </div>
-      </div>
-    </div>
+    <!-- YouTube -->
+    <label class="input-wrapper">
+      <i class="icon fab fa-youtube"></i>
+      <input type="text"
+             name="youtube"
+             value="<?php echo htmlspecialchars($profile['youtube'] ?? ''); ?>"
+             placeholder="URL Youtube" />
+    </label>
 
     <!-- Αποθήκευση -->
-    <div class="submit-wrapper mt-3">
-      <button type="submit"
-              name="save_profile"
-              class="cta-button">
-        Αποθήκευση
-      </button>
-    </div>
+    <button type="submit"
+            name="save_profile"
+            class="btn secondary inline">
+      Αποθήκευση
+    </button>
   </form>
 </main>

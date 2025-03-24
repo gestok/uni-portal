@@ -43,7 +43,7 @@ try {
           'id' => $lesson['submission_id'],
           'title' => $lesson['submission_title'],
           'description' => $lesson['submission_description'],
-          'file' => explode('uni_portal', $lesson['file_path'])[1] ?? null,
+          'file' => $lesson['file_path'],
           'date' => $lesson['submitted_at'],
           'grade' => $lesson['grade'],
           'status' => $lesson['status']
@@ -136,7 +136,7 @@ try {
                       </span>
 
                       <!-- Λήψη -->
-                      <a href="<?php echo BASE_URL . $assignment['submission']['file']; ?>"
+                      <a href="<?php echo BASE_URL . '/' . $assignment['submission']['file']; ?>"
                          download
                          class="download user-select-none">
                         <!-- Εικονίδιο -->

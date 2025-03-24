@@ -203,3 +203,15 @@ function getUniqueFileName($file): string|null
 
   return uniqid() . "_" . basename($file['name']);
 }
+
+/**
+ * Eλέγχει αν το URL ξεκινά με http:// ή https://.
+ * Αν όχι, προσθέτει το https:// στην αρχή του URL.
+ */
+function formatURL($url)
+{
+  if (strpos($url, 'https://') !== 0 && strpos($url, 'http://') !== 0) {
+    return "https://$url";
+  }
+  return $url;
+}

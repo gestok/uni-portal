@@ -1,5 +1,12 @@
 <!-- Main -->
-<main class="container home position-relative">
+<main class="container home">
+
+  <!-- Notification -->
+  <?php if (isset($_GET['success'])): ?>
+    <div class="notification success">
+      <?php echo htmlspecialchars($_GET['success']); ?>
+    </div>
+  <?php endif; ?>
 
   <!-- Title -->
   <div class="title mt-4 text-center">
@@ -38,7 +45,4 @@
       </a>
     </div>
   <?php endif; ?>
-
-  <!-- Notification -->
-  <?php include_once 'templates/notification.php'; ?>
 </main>

@@ -31,9 +31,15 @@ switch (getCurrentPage()):
 
   // Logout
   case 'logout':
-    if (!isLoggedIn()) {
-      redirectTo(BASE_URL . "/home");
-    }
+    // Επιτυχής αποσύνδεση
+    $successMessage = "Έχετε αποσυνδεθεί επιτυχώς.";
+
+    // Τερματισμός της συνεδρίας
+    session_unset();
+    session_destroy();
+
+    // Επιστροφή στην αρχική σελίδα με μήνυμα επιτυχίας
+    redirectTo(BASE_URL . "/home?success=" . urlencode($successMessage));
     break;
 endswitch;
 
@@ -77,11 +83,6 @@ switch (getCurrentPage()):
     include 'templates/login.php';
     break;
 
-  // Logout
-  case 'logout':
-    include 'templates/logout.php';
-    break;
-
   // Register
   case 'register':
     include 'templates/register.php';
@@ -97,3 +98,6 @@ endswitch;
 
 // Footer
 require_once 'templates/footer.php';
+
+// Notification
+require_once 'templates/notification.php';

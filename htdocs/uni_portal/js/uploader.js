@@ -2,9 +2,6 @@
  * Update uploaded filename
  */
 const onFileChange = (event, text) => {
-  event.preventDefault();
-  event.stopPropagation();
-
   const segments = event?.target?.value?.split("\\");
   const filename = segments?.[segments.length - 1];
 
@@ -61,12 +58,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // File upload element
   const wrapper = document.querySelector(".custom-file-upload");
-  const input = wrapper.querySelector("input[type='file']");
+  const input = wrapper.querySelector("input");
   const text = wrapper.querySelector(".uploaded-file");
 
-  if (input && wrapper && text) {
-    wrapper.addEventListener("dragover", (event) => onFileDragOver(event));
-    wrapper.addEventListener("drop", (event) => onFileDrop(event, input, text));
-    input.addEventListener("change", (event) => onFileChange(event, text));
+  if (!input || !wrapper || !text) {
+    return;
   }
+
+  wrapper.addEventListener("dragover", (event) => onFileDragOver(event));
+  wrapper.addEventListener("drop", (event) => onFileDrop(event, input, text));
+  input.addEventListener("change", (event) => onFileChange(event, text));
 });

@@ -49,7 +49,7 @@ if (isPostRequest() && isset($_POST['register'])) {
 
   <!-- Φόρμα Εγγραφής -->
   <form method="post"
-        class="register-wrapper position-relative">
+        class="register-wrapper">
     <!-- Username -->
     <div class="info-wrapper">
       <div class="title">Όνομα Χρήστη</div>
@@ -108,8 +108,5 @@ if (isPostRequest() && isset($_POST['register'])) {
         Εγγραφή
       </button>
     </div>
-
-    <!-- Notification -->
-    <?php include_once 'templates/notification.php'; ?>
   </form>
 </main>

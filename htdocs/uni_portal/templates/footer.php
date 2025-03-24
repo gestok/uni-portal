@@ -33,6 +33,15 @@
 <?php if (isPage('uploader')): ?>
   <script src="<?php echo BASE_URL; ?>/js/uploader.js"></script>
 <?php endif; ?>
+<?php if (isPage('create')): ?>
+  <script src="<?php echo BASE_URL; ?>/js/create.js"></script>
+<?php endif; ?>
+<?php if (isPage('assignments')): ?>
+  <script src="<?php echo BASE_URL; ?>/js/assignments.js"></script>
+<?php endif; ?>
+<?php if (isPage('students')): ?>
+  <script src="<?php echo BASE_URL; ?>/js/students.js"></script>
+<?php endif; ?>
 
 </body>
 

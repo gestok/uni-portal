@@ -10,9 +10,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 18px;
-    background-color: var(--background-secondary-color);
+    background-color: var(--gray-100);
     border-bottom: solid 1px var(--gray-90);
-    box-shadow: 0 16px 12px -10px var(--background-secondary-color);
+    box-shadow: 0 16px 12px -10px var(--gray-100);
 
     .title {
       color: var(--gray-40);
@@ -155,7 +155,7 @@
               margin: 10px auto 0 0;
               padding: 6px 14px;
               background-color: hsl(
-                from var(--background-secondary-color) h s l / 0.5
+                from var(--gray-100) h s l / 0.5
               );
               border: solid 1px hsl(from var(--gray-40) h s l / 0.5);
               border-radius: 4px;

@@ -1,6 +1,6 @@
 <?php
 // Φόρτωμα εγγεγραμμένων μαθημάτων
-$enrolledLessons = getEnrolledLessons();
+$enrolledLessons = getStudentLessons();
 // Φόρτωμα εργασιών για το συγκεκριμένο μάθημα (εάν έχει επιλεχθεί μάθημα)
 $assignments = getLessonAssignments($_GET['lesson_id'] ?? null);
 // Φόρτωμα τελευταίας υποβολής για το συγκεκριμένο μάθημα και εργασία (εάν έχει επιλεχθεί εργασία και υπάρχει υποβολή)
@@ -29,10 +29,7 @@ if (isPostRequest()) {
   <!-- Φόρμα υποβολής -->
   <form method="post"
         enctype="multipart/form-data"
-        class="uploader-wrapper position-relative">
-
-    <!-- Notification -->
-    <?php include_once 'templates/notification.php'; ?>
+        class="uploader-wrapper">
 
     <!-- Μάθημα -->
     <label class="info-wrapper">

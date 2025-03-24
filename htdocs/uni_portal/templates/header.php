@@ -16,6 +16,9 @@
       <!-- Global CSS -->
       <link rel="stylesheet"
             href="<?php echo BASE_URL; ?>/css/styles.css" />
+      <!-- Button CSS -->
+      <link rel="stylesheet"
+            href="<?php echo BASE_URL; ?>/css/buttons.css" />
       <!-- Notifications CSS -->
       <link rel="stylesheet"
             href="<?php echo BASE_URL; ?>/css/notifications.css" />
@@ -31,7 +34,11 @@
       <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
       <!-- Custom CSS ανάλογα με τη σελίδα -->
-      <?php if (isPage('portfolio') || isPage('profile') || isPage('uploader')): ?>
+      <?php if (
+            isPage('portfolio') || isPage('profile') ||
+            isPage('uploader') || isPage('create') ||
+            isPage('assignments') || isPage('students')
+      ): ?>
             <link rel="stylesheet"
                   href="<?php echo BASE_URL; ?>/css/<?php echo getCurrentPage(); ?>.css" />
       <?php endif; ?>
@@ -116,3 +123,6 @@
                   </div>
             </div>
       </header>
+</body>
+
+</html>

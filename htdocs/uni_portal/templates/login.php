@@ -43,7 +43,7 @@ if (isPostRequest() && isset($_POST['login'])) {
   <!-- Form -->
   <form action="<?php echo BASE_URL; ?>/login"
         method="post"
-        class="login-wrapper position-relative">
+        class="login-wrapper">
 
     <!-- Username -->
     <div class="info-wrapper">
@@ -77,9 +77,6 @@ if (isPostRequest() && isset($_POST['login'])) {
         Είσοδος
       </button>
     </div>
-
-    <!-- Notification -->
-    <?php include_once 'templates/notification.php'; ?>
   </form>
 
   <!-- Register Link -->
