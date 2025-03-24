@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2025 at 01:10 AM
+-- Generation Time: Mar 24, 2025 at 01:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -62,7 +62,8 @@ INSERT INTO `assignments` (`id`, `lesson_id`, `title`, `description`, `thumbnail
 (17, 5, 'Binary Trees', 'Υλοποιήστε ένα δυαδικό δέντρο σε Python ή Java. Θα ορίσετε λειτουργίες για εισαγωγή, διαγραφή και αναζήτηση κόμβων, καθώς και για traversals (in-order, pre-order).', 'tree.webp', 9, '2025-06-17', '2025-03-19 00:01:37'),
 (18, 5, 'Sorting Algorithms', 'Συγκρίνετε αλγορίθμους ταξινόμησης (π.χ. QuickSort, MergeSort, BubbleSort) ως προς την πολυπλοκότητα χρόνου και την απόδοση. Θα υλοποιήσετε τουλάχιστον 2 αλγορίθμους και θα μετρήσετε τον χρόνο εκτέλεσής τους.', 'sort.webp', 9, '2025-06-27', '2025-03-19 00:01:37'),
 (19, 5, 'Graph Traversal', 'Υλοποιήστε τους αλγορίθμους BFS (Breadth-First Search) και DFS (Depth-First Search) για την διέλευση γράφων. Θα δοκιμάσετε τους αλγορίθμους σε διαφορετικά γραφήματα και θα αναλύσετε τα αποτελέσματα.', 'graph.webp', 9, '2025-07-07', '2025-03-19 00:01:37'),
-(20, 5, 'Hash Tables', 'Δημιουργήστε μια hash table με open addressing τεχνική (π.χ. linear probing). Θα ορίσετε συναρτήσεις κατακερματισμού, θα χειριστείτε collisions και θα μετρήσετε την απόδοση της δομής.', 'hash.webp', 9, '2025-07-17', '2025-03-19 00:01:37');
+(20, 5, 'Hash Tables', 'Δημιουργήστε μια hash table με open addressing τεχνική (π.χ. linear probing). Θα ορίσετε συναρτήσεις κατακερματισμού, θα χειριστείτε collisions και θα μετρήσετε την απόδοση της δομής.', 'hash.webp', 9, '2025-07-17', '2025-03-19 00:01:37'),
+(34, 2, 'Advanced JavaScript Concepts', 'Σε αυτήν την εργασία θα πρέπει να υλοποιήσετε 10 διαφορετικά παραδείγματα με Higher Order Functions. Κάθε παράδειγμα θα πρέπει να δέχεται συγκεκριμένα ορίσματα και να επιστρέφει ένα αποτέλεσμα. Ιδανικά τα παραδείγματα θα πρέπει να λύνουν καθημερινά προβλήματα προγραμματισμού.', '67e08cf4144bc_js.jpg', 18, '2025-05-30', '2025-03-23 22:36:36');
 
 -- --------------------------------------------------------
 
@@ -124,7 +125,7 @@ INSERT INTO `profiles` (`user_id`, `fullname`, `job`, `mobile`, `linkedin`, `fac
 (10, 'Ανδρέας Γεωργίου', 'Καθηγητής Βάσεων Δεδομένων', '6923456789', NULL, 'facebook.com/andreas', NULL, NULL, 'twitter.com/andreas_g', '2025-03-19 00:01:37'),
 (11, 'Ευαγγελία Στεφάνου', 'Καθηγήτρια Δικτύων', '6934567890', 'linkedin.com/evangelia', NULL, NULL, 'instagram.com/evangelia_s', NULL, '2025-03-19 00:01:37'),
 (12, 'Μαρία Ιωάννου', 'Καθηγήτρια Τεχνητής Νοημοσύνης', '6945678901', NULL, NULL, 'youtube.com/maria_ai', 'instagram.com/maria_ai', 'twitter.com/maria_ai', '2025-03-19 00:01:37'),
-(17, 'Student', 'EAP', '6988776655', 'linkedin.com/in/student', 'facebook.com/student', '', '', '', '2025-03-22 21:51:08'),
+(17, 'Γιώργος Χονδροματίδης', 'Φοιτητής', '6994455111', 'linkedin.com/in/george', 'facebook.com/geo', 'youtube.com/george', 'https://instagram.com/geo', 'twitter.com/geo', '2025-03-24 00:00:02'),
 (18, 'Teacher', 'EAP', '', '', '', '', '', '', '2025-03-22 23:16:32');
 
 -- --------------------------------------------------------
@@ -196,46 +197,30 @@ CREATE TABLE `submissions` (
 INSERT INTO `submissions` (`id`, `assignment_id`, `user_id`, `title`, `description`, `file_path`, `submitted_at`, `grade`, `status`) VALUES
 (1, 1, 1, 'Ιστοσελίδα Εστιατορίου', 'HTML/CSS με Bootstrap', 'uploads/submissions/lesson_1/restaurant.pdf', '2025-03-19 00:01:37', 85.50, 'graded'),
 (2, 2, 1, 'Todo List App', 'JavaScript με localStorage', 'uploads/submissions/lesson_1/todo.zip', '2025-03-19 00:01:37', NULL, 'under_review'),
-(3, 5, 1, 'Βιβλιοθήκη ER Diagram', 'Σχεδίαση με Draw.io', 'uploads/submissions/lesson_1/library.pdf', '2025-03-19 00:01:37', 92.00, 'graded'),
-(4, 9, 1, 'Wireshark Analysis', 'TCP packet capture', 'uploads/submissions/lesson_1/wireshark.pdf', '2025-03-19 00:01:37', 78.00, 'graded'),
-(5, 13, 1, 'Linear Regression', 'Πρόβλεψη τιμών κατοικίας', 'uploads/submissions/lesson_1/regression.pdf', '2025-03-19 00:01:37', NULL, 'submitted'),
-(6, 3, 2, 'Python Algorithms', 'Bubble sort & Binary search', 'uploads/submissions/lesson_2/algorithms.pdf', '2025-03-19 00:01:37', 88.00, 'graded'),
+(3, 5, 1, 'Βιβλιοθήκη ER Diagram', 'Σχεδίαση με Draw.io', 'uploads/submissions/lesson_2/library.pdf', '2025-03-19 00:01:37', 92.00, 'graded'),
+(4, 9, 1, 'Wireshark Analysis', 'TCP packet capture', 'uploads/submissions/lesson_3/wireshark.pdf', '2025-03-19 00:01:37', 78.00, 'graded'),
 (7, 6, 2, 'SQL Practice', 'Ερωτήματα για βιβλιοθήκη', 'uploads/submissions/lesson_2/queries.pdf', '2025-03-19 00:01:37', 95.50, 'graded'),
-(8, 10, 2, 'Firewall Rules', 'iptables configuration', 'uploads/submissions/lesson_2/firewall.pdf', '2025-03-19 00:01:37', NULL, 'under_review'),
-(9, 14, 2, 'Neural Network', 'MNIST με TensorFlow', 'uploads/submissions/lesson_2/mnist.pdf', '2025-03-19 00:01:37', 81.00, 'graded'),
-(10, 17, 2, 'Binary Tree', 'Υλοποίηση σε C++', 'uploads/submissions/lesson_2/tree.pdf', '2025-03-19 00:01:37', 89.50, 'graded'),
-(11, 4, 3, 'React Portfolio', 'Προσωπικό portfolio site', 'uploads/submissions/lesson_3/portfolio.pdf', '2025-03-19 00:01:37', NULL, 'submitted'),
-(12, 7, 3, 'Normalization', 'Μετατροπή σε 3NF', 'uploads/submissions/lesson_3/normalization.pdf', '2025-03-19 00:01:37', 76.50, 'graded'),
+(9, 14, 2, 'Neural Network', 'MNIST με TensorFlow', 'uploads/submissions/lesson_4/mnist.pdf', '2025-03-19 00:01:37', 81.00, 'graded'),
+(11, 4, 3, 'React Portfolio', 'Προσωπικό portfolio site', 'uploads/submissions/lesson_1/portfolio.pdf', '2025-03-19 00:01:37', NULL, 'submitted'),
 (13, 11, 3, 'OpenVPN Setup', 'AWS server configuration', 'uploads/submissions/lesson_3/vpn_config.pdf', '2025-03-19 00:01:37', 94.00, 'graded'),
-(14, 15, 3, 'NLP Project', 'Sentiment analysis κειμένων', 'uploads/submissions/lesson_3/nlp.pdf', '2025-03-19 00:01:37', NULL, 'under_review'),
-(15, 18, 3, 'Sorting Comparison', 'QuickSort vs MergeSort', 'uploads/submissions/lesson_3/sorting.pdf', '2025-03-19 00:01:37', 87.00, 'graded'),
-(16, 8, 4, 'NoSQL Report', 'Σύγκριση MongoDB/MySQL', 'uploads/submissions/lesson_4/nosql.pdf', '2025-03-19 00:01:37', 90.00, 'graded'),
-(17, 12, 4, 'HTTP/3 Research', 'Παρουσίαση QUIC protocol', 'uploads/submissions/lesson_4/http3.pdf', '2025-03-19 00:01:37', 83.50, 'graded'),
-(18, 16, 4, 'GAN Project', 'Generated faces με DCGAN', 'uploads/submissions/lesson_4/dcgan.pdf', '2025-03-19 00:01:37', NULL, 'submitted'),
-(19, 19, 4, 'Graph Traversal', 'BFS για social network', 'uploads/submissions/lesson_4/graph.pdf', '2025-03-19 00:01:37', 91.00, 'graded'),
-(20, 20, 4, 'Hash Table', 'Υλοποίηση με Python', 'uploads/submissions/lesson_4/hash_table.pdf', '2025-03-19 00:01:37', 84.50, 'graded'),
-(21, 1, 5, 'E-commerce Site', 'Responsive design', 'uploads/submissions/lesson_5/ecommerce.pdf', '2025-03-19 00:01:37', 79.00, 'graded'),
-(22, 5, 5, 'ER Diagram', 'Σχεδίαση για νοσοκομείο', 'uploads/submissions/lesson_5/hospital.pdf', '2025-03-19 00:01:37', 88.50, 'graded'),
-(23, 9, 5, 'Network Traffic', 'Analysis με Wireshark', 'uploads/submissions/lesson_5/traffic.pdf', '2025-03-19 00:01:37', 75.50, 'graded'),
-(24, 13, 5, 'House Price Prediction', 'Linear regression model', 'uploads/submissions/lesson_5/houses.pdf', '2025-03-19 00:01:37', 82.00, 'graded'),
-(25, 17, 5, 'Tree Implementation', 'Binary tree in Java', 'uploads/submissions/lesson_5/tree.pdf', '2025-03-19 00:01:37', NULL, 'under_review'),
-(26, 2, 6, 'Calculator App', 'JavaScript calculator', 'uploads/submissions/lesson_6/calculator.pdf', '2025-03-19 00:01:37', 93.00, 'graded'),
-(27, 6, 6, 'Library Queries', 'Complex SQL queries', 'uploads/submissions/lesson_6/library.pdf', '2025-03-19 00:01:37', 97.00, 'graded'),
-(28, 10, 6, 'Firewall Setup', 'Ubuntu server rules', 'uploads/submissions/lesson_6/iptables.pdf', '2025-03-19 00:01:37', 86.50, 'graded'),
-(29, 14, 6, 'CNN Model', 'CIFAR-10 classification', 'uploads/submissions/lesson_6/cnn.pdf', '2025-03-19 00:01:37', 89.00, 'graded'),
-(30, 18, 6, 'Sorting Algorithms', 'Υλοποίηση 5 αλγορίθμων', 'uploads/submissions/lesson_6/sorting.pdf', '2025-03-19 00:01:37', 94.50, 'graded'),
-(31, 3, 7, 'Data Structures', 'Python implementations', 'uploads/submissions/lesson_7/structures.pdf', '2025-03-19 00:01:37', 80.50, 'graded'),
-(32, 7, 7, '3NF Conversion', 'Case study για e-shop', 'uploads/submissions/lesson_7/normalization.pdf', '2025-03-19 00:01:37', 77.00, 'graded'),
-(33, 11, 7, 'VPN Client', 'OpenVPN client setup', 'uploads/submissions/lesson_7/client.pdf', '2025-03-19 00:01:37', NULL, 'submitted'),
-(34, 15, 7, 'Twitter Analysis', 'Sentiment analysis API', 'uploads/submissions/lesson_7/twitter.pdf', '2025-03-19 00:01:37', 84.00, 'graded'),
-(35, 19, 7, 'Social Network BFS', 'Graph traversal example', 'uploads/submissions/lesson_7/network.pdf', '2025-03-19 00:01:37', 92.50, 'graded'),
-(36, 4, 8, 'React E-shop', 'Full e-commerce solution', 'uploads/submissions/lesson_8/eshop.pdf', '2025-03-19 00:01:37', NULL, 'under_review'),
-(37, 8, 8, 'NoSQL Performance', 'Benchmark MongoDB vs MySQL', 'uploads/submissions/lesson_8/benchmark.pdf', '2025-03-19 00:01:37', 91.50, 'graded'),
-(38, 12, 8, 'HTTP/3 Presentation', 'QUIC protocol analysis', 'uploads/submissions/lesson_8/quic.pdf', '2025-03-19 00:01:37', 88.00, 'graded'),
-(39, 16, 8, 'GAN Art', 'Generated artworks', 'uploads/submissions/lesson_8/artgan.pdf', '2025-03-19 00:01:37', 79.50, 'graded'),
-(40, 20, 8, 'Hash Collisions', 'Επίλυση collisions', 'uploads/submissions/lesson_8/hash.pdf', '2025-03-19 00:01:37', 85.00, 'graded'),
-(41, 1, 17, 'Recreating Spotify', 'Spotify mockup in HTML/CSS!!', 'uploads/submissions/lesson_1/67df27f4b5a3d_spotify.pdf', '2025-03-22 21:27:19', NULL, 'submitted'),
-(42, 7, 17, 'Normalization Assignment', 'The assignment for normalization homework.', 'uploads/submissions/lesson_2/67df12f0c2d31_spotify.pdf', '2025-03-22 19:44:57', NULL, 'submitted');
+(14, 15, 3, 'NLP Project', 'Sentiment analysis κειμένων', 'uploads/submissions/lesson_4/nlp.pdf', '2025-03-19 00:01:37', NULL, 'under_review'),
+(15, 18, 3, 'Sorting Comparison', 'QuickSort vs MergeSort', 'uploads/submissions/lesson_5/sorting.pdf', '2025-03-19 00:01:37', 87.00, 'graded'),
+(17, 12, 4, 'HTTP/3 Research', 'Παρουσίαση QUIC protocol', 'uploads/submissions/lesson_3/http3.pdf', '2025-03-19 00:01:37', 83.50, 'graded'),
+(19, 19, 4, 'Graph Traversal', 'BFS για social network', 'uploads/submissions/lesson_5/graph.pdf', '2025-03-19 00:01:37', 91.00, 'graded'),
+(20, 20, 4, 'Hash Table', 'Υλοποίηση με Python', 'uploads/submissions/lesson_5/hash_table.pdf', '2025-03-19 00:01:37', 84.50, 'graded'),
+(21, 1, 5, 'E-commerce Site', 'Responsive design', 'uploads/submissions/lesson_1/ecommerce.pdf', '2025-03-19 00:01:37', 79.00, 'graded'),
+(22, 5, 5, 'ER Diagram', 'Σχεδίαση για νοσοκομείο', 'uploads/submissions/lesson_2/hospital.pdf', '2025-03-19 00:01:37', 88.50, 'graded'),
+(27, 6, 6, 'Library Queries', 'Complex SQL queries', 'uploads/submissions/lesson_2/library2.pdf', '2025-03-19 00:01:37', 97.00, 'graded'),
+(30, 18, 6, 'Sorting Algorithms', 'Υλοποίηση 5 αλγορίθμων', 'uploads/submissions/lesson_5/sorting2.pdf', '2025-03-19 00:01:37', 94.50, 'graded'),
+(35, 19, 7, 'Social Network BFS', 'Graph traversal example', 'uploads/submissions/lesson_5/network.pdf', '2025-03-19 00:01:37', 92.50, 'graded'),
+(36, 4, 8, 'React E-shop', 'Full e-commerce solution', 'uploads/submissions/lesson_1/eshop.pdf', '2025-03-19 00:01:37', NULL, 'under_review'),
+(37, 8, 8, 'NoSQL Performance', 'Benchmark MongoDB vs MySQL', 'uploads/submissions/lesson_2/benchmark.pdf', '2025-03-19 00:01:37', 91.50, 'graded'),
+(38, 12, 8, 'HTTP/3 Presentation', 'QUIC protocol analysis', 'uploads/submissions/lesson_3/quic.pdf', '2025-03-19 00:01:37', 88.00, 'graded'),
+(39, 16, 8, 'GAN Art', 'Generated artworks', 'uploads/submissions/lesson_4/artgan.pdf', '2025-03-19 00:01:37', 79.50, 'graded'),
+(40, 20, 8, 'Hash Collisions', 'Επίλυση collisions', 'uploads/submissions/lesson_5/hash.pdf', '2025-03-19 00:01:37', 85.00, 'graded'),
+(43, 1, 17, 'Recreating Spotify', 'Σε αυτήν την εργασία ξαναφτιάχνουμε το Spotify με HTML, CSS και όπου χρειαστεί JavaScript.', 'uploads/submissions/lesson_1/67e08ae58fc0a_spotify.pdf', '2025-03-23 22:27:49', NULL, 'submitted'),
+(44, 2, 17, 'Enhancing Spotify App', 'Σε αυτήν την εργασία αναβαθμίζουμε την προηγούμενη εργασία με το Spotify app, χρησιμοποιώντας JavaScript και internal state.', 'uploads/submissions/lesson_1/67e08b5e23a31_spotify.pdf', '2025-03-23 22:29:50', NULL, 'submitted'),
+(45, 6, 17, 'Διάφορα SQL Ερωτήματα', 'Σε αυτήν την εργασία παραθέτω 50 διαφορετικά SQL ερωτήματα σε μια βάση δεδομένων τύπου MySQL. Η βάση δεδομένων έγινε με τη χρήση phpMyAdmin.', 'uploads/submissions/lesson_2/67e08e8a5f754_queries.pdf', '2025-03-23 22:43:22', NULL, 'submitted');
 
 -- --------------------------------------------------------
 
@@ -257,7 +242,12 @@ INSERT INTO `teacher_lessons` (`teacher_id`, `lesson_id`) VALUES
 (9, 5),
 (10, 2),
 (11, 3),
-(12, 4);
+(12, 4),
+(18, 1),
+(18, 2),
+(18, 3),
+(18, 4),
+(18, 5);
 
 -- --------------------------------------------------------
 
@@ -362,7 +352,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `lessons`
@@ -374,7 +364,7 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `users`
