@@ -1,4 +1,3 @@
-// Add Footer Copyright
 const addFooterCopyright = () => {
   const element = document.querySelector("footer .copyright");
 

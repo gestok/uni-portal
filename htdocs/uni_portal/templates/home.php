@@ -1,5 +1,4 @@
-<!-- Main -->
-<main class="container home">
+<main class="container home mt-4 mb-3">
 
   <!-- Notification -->
   <?php if (isset($_GET['success'])): ?>
@@ -9,17 +8,17 @@
   <?php endif; ?>
 
   <!-- Title -->
-  <div class="title mt-4 text-center">
+  <div class="title text-center">
     Καλωσήλθατε στο Μεταπτυχιακό μας Πρόγραμμα
   </div>
 
   <!-- Subtitle -->
-  <div class="subtitle mb-3 text-center">
+  <div class="subtitle text-center">
     Εδώ θα μάθετε πολλά!
   </div>
 
   <!-- Images -->
-  <div class="cards-wrapper">
+  <div class="cards-wrapper mt-3">
     <img class="card"
          src="<?php echo BASE_URL; ?>/static/image1.jpg" />
     <img class="card"
@@ -30,17 +29,17 @@
 
   <!-- Buttons (εμφανίζεται μόνο σε μη συνδεδεμένους χρήστες) -->
   <?php if (!isLoggedIn()): ?>
-    <div class="button-wrapper">
+    <div class="button-wrapper mt-3">
 
       <!-- Login -->
       <a href="<?php echo BASE_URL; ?>/login"
-         class="cta-button">
+         class="btn secondary">
         Είσοδος
       </a>
 
       <!-- Register -->
       <a href="<?php echo BASE_URL; ?>/register"
-         class="cta-button">
+         class="btn primary">
         Εγγραφή
       </a>
     </div>

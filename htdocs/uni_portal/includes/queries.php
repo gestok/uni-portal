@@ -86,9 +86,9 @@ function getLessonAssignments(int|string $lesson_id = null): array
  * Επιστρέφει την υποβολή της εργασίας (`id`, `assignment_id`, `title`, `description`, `file_path`, `submitted_at`, `grade` και `status`)
  * για το συγκεκριμένο μάθημα και εργασία.
  * 
- * Αν δεν δοθεί ID μαθήματος ή αν δεν υπάρχουν υποβολές ή αν προκύψει σφάλμα, επιστρέφει ένα κενό array.
+ * Αν δεν δοθεί ID εργασίας ή αν δεν υπάρχουν υποβολές ή αν προκύψει σφάλμα, επιστρέφει null.
  */
-function getAssignmentSubmission(int|string $assignment_id = null)
+function getAssignmentSubmission(int|string|null $assignment_id): mixed
 {
   global $pdo;
 
@@ -104,7 +104,7 @@ function getAssignmentSubmission(int|string $assignment_id = null)
     $stmt->execute([getUserId(), $assignment_id]);
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
   } catch (PDOException $e) {
-    return [];
+    return null;
   }
 }
 
@@ -239,8 +239,9 @@ function getAllStudents(): array
  * Επιστρέφει τα στοιχεία προφίλ του φοιτητή με το δοθέν ID.
  * 
  * Αν δεν υπάρχει φοιτητής με το συγκεκριμένο ID ή αν προκύψει σφάλμα, επιστρέφει null.
+ * @todo Σύμπτιξη με την getUserData() για να αποφευχθεί η επανάληψη κώδικα.
  */
-function getStudentProfile(int|string $studentId = null)
+function getStudentProfile(int|string $studentId = null): mixed
 {
   global $pdo;
 
@@ -321,11 +322,11 @@ function getStudentSubmissions(int|string $studentId = null): array
 }
 
 /**
- * Επιστρέφει τα στοιχεία του χρήστη με το δοθέν ID.
+ * Επιστρέφει τα στοιχεία του χρήστη.
  * Επιστρέφει ένα array με τα πεδία `id`, `username`, `email`
  * και profile (`fullname`, `job`, `mobile`, `facebook`, `twitter`, `linkedin`, `instagram`, `youtube`).
  */
-function getUserData()
+function getUserData(): mixed
 {
   global $pdo;
 
@@ -342,6 +343,26 @@ function getUserData()
     return $stmt->fetch(PDO::FETCH_ASSOC);
   } catch (PDOException $e) {
     return [];
+  }
+}
+
+/**
+ * Επιστρέφει τα στοιχεία του χρήστη με το δοθέν username ή null αν δεν υπάρχει.
+ */
+function getUserByUsername(string $username): mixed
+{
+  global $pdo;
+
+  if (!isset($pdo) || empty($username)) {
+    return null;
+  }
+
+  try {
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->execute([$username]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  } catch (PDOException $e) {
+    return null;
   }
 }
 
@@ -403,6 +424,48 @@ function updateUserEmail($email): bool
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$email, getUserId()]);
     return true;
+  } catch (PDOException $e) {
+    return false;
+  }
+}
+
+/**
+ * Ελέγχει αν ο χρήστης με το δοθέν username ή email υπάρχει στη βάση δεδομένων.
+ */
+function checkUserExists(string $username, string $email): bool
+{
+  global $pdo;
+
+  if (!isset($pdo) || empty($username) || empty($email)) {
+    return false;
+  }
+
+  try {
+    $sql = "SELECT id FROM users WHERE username = ? OR email = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$username, $email]);
+    return $stmt->rowCount() > 0;
+  } catch (PDOException $e) {
+    return false;
+  }
+}
+
+/**
+ * Προσθέτει έναν νέο χρήστη στη βάση δεδομένων και επιστρέφει true αν η προσθήκη ήταν επιτυχής.
+ */
+function insertUser(string $username, string $email, string $hashed_password, string $role): bool
+{
+  global $pdo;
+
+  if (!isset($pdo) || empty($username) || empty($email) || empty($hashed_password) || empty($role)) {
+    return false;
+  }
+
+  try {
+    $sql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$username, $email, $hashed_password, $role]);
+    return $stmt->rowCount() > 0;
   } catch (PDOException $e) {
     return false;
   }

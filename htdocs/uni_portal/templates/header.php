@@ -16,6 +16,12 @@
       <!-- Global CSS -->
       <link rel="stylesheet"
             href="<?php echo BASE_URL; ?>/css/styles.css" />
+      <!-- Header CSS -->
+      <link rel="stylesheet"
+            href="<?php echo BASE_URL; ?>/css/header.css" />
+      <!-- Footer CSS -->
+      <link rel="stylesheet"
+            href="<?php echo BASE_URL; ?>/css/footer.css" />
       <!-- Button CSS -->
       <link rel="stylesheet"
             href="<?php echo BASE_URL; ?>/css/buttons.css" />
@@ -35,18 +41,22 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
       <!-- Custom CSS ανάλογα με τη σελίδα -->
       <?php if (
+            isPage('home') ||
             isPage('portfolio') || isPage('profile') ||
             isPage('uploader') || isPage('create') ||
             isPage('assignments') || isPage('students')
       ): ?>
             <link rel="stylesheet"
                   href="<?php echo BASE_URL; ?>/css/<?php echo getCurrentPage(); ?>.css" />
+      <?php elseif (isPage('login') || isPage('register')): ?>
+            <link rel="stylesheet"
+                  href="<?php echo BASE_URL; ?>/css/login-register.css" />
       <?php endif; ?>
 </head>
 
 <body>
       <!-- Header -->
-      <header>
+      <header id="masthead">
             <div class="header-wrapper container">
                   <!-- Λογότυπο -->
                   <a href="<?php echo BASE_URL; ?>"
@@ -106,21 +116,19 @@
                   </nav>
 
                   <!-- Login / Logout -->
-                  <div class="auth-links">
-                        <?php if (isLoggedIn()): ?>
-                              <a href="<?php echo BASE_URL; ?>/logout"
-                                 title="Αποσύνδεση"
-                                 class="cta">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                              </a>
-                        <?php else: ?>
-                              <a href="<?php echo BASE_URL; ?>/login"
-                                 title="Είσοδος"
-                                 class="cta">
-                                    <i class="fa-solid fa-right-to-bracket"></i>
-                              </a>
-                        <?php endif; ?>
-                  </div>
+                  <?php if (isLoggedIn()): ?>
+                        <a href="<?php echo BASE_URL; ?>/logout"
+                           title="Αποσύνδεση"
+                           class="cta">
+                              <i class="fa-solid fa-right-from-bracket"></i>
+                        </a>
+                  <?php else: ?>
+                        <a href="<?php echo BASE_URL; ?>/login"
+                           title="Είσοδος"
+                           class="cta">
+                              <i class="fa-solid fa-right-to-bracket"></i>
+                        </a>
+                  <?php endif; ?>
             </div>
       </header>
 </body>

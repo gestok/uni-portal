@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 24, 2025 at 01:03 AM
+-- Generation Time: Mar 25, 2025 at 06:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -125,8 +125,9 @@ INSERT INTO `profiles` (`user_id`, `fullname`, `job`, `mobile`, `linkedin`, `fac
 (10, 'Ανδρέας Γεωργίου', 'Καθηγητής Βάσεων Δεδομένων', '6923456789', NULL, 'facebook.com/andreas', NULL, NULL, 'twitter.com/andreas_g', '2025-03-19 00:01:37'),
 (11, 'Ευαγγελία Στεφάνου', 'Καθηγήτρια Δικτύων', '6934567890', 'linkedin.com/evangelia', NULL, NULL, 'instagram.com/evangelia_s', NULL, '2025-03-19 00:01:37'),
 (12, 'Μαρία Ιωάννου', 'Καθηγήτρια Τεχνητής Νοημοσύνης', '6945678901', NULL, NULL, 'youtube.com/maria_ai', 'instagram.com/maria_ai', 'twitter.com/maria_ai', '2025-03-19 00:01:37'),
-(17, 'Γιώργος Χονδροματίδης', 'Φοιτητής', '6994455111', 'linkedin.com/in/george', 'facebook.com/geo', 'youtube.com/george', 'https://instagram.com/geo', 'twitter.com/geo', '2025-03-24 00:00:02'),
-(18, 'Teacher', 'EAP', '', '', '', '', '', '', '2025-03-22 23:16:32');
+(17, 'Γιώργος Χονδροματίδης', 'Φοιτητής', '6994455111', 'linkedin.com/in/george', 'facebook.com/geo', 'youtube.com/george', 'https://instagram.com/geo', 'twitter.com/geo', '2025-03-24 08:53:36'),
+(18, 'Teacher', 'EAP', '', '', '', '', '', '', '2025-03-22 23:16:32'),
+(21, 'Μαρία Παπαδοπούλου', 'Φοιτήτρια', '6969585858', '', 'facebook.com/maria', '', '', '', '2025-03-25 17:39:45');
 
 -- --------------------------------------------------------
 
@@ -170,7 +171,10 @@ INSERT INTO `student_lessons` (`student_id`, `lesson_id`) VALUES
 (17, 2),
 (17, 3),
 (17, 4),
-(17, 5);
+(17, 5),
+(21, 1),
+(21, 2),
+(21, 3);
 
 -- --------------------------------------------------------
 
@@ -218,9 +222,10 @@ INSERT INTO `submissions` (`id`, `assignment_id`, `user_id`, `title`, `descripti
 (38, 12, 8, 'HTTP/3 Presentation', 'QUIC protocol analysis', 'uploads/submissions/lesson_3/quic.pdf', '2025-03-19 00:01:37', 88.00, 'graded'),
 (39, 16, 8, 'GAN Art', 'Generated artworks', 'uploads/submissions/lesson_4/artgan.pdf', '2025-03-19 00:01:37', 79.50, 'graded'),
 (40, 20, 8, 'Hash Collisions', 'Επίλυση collisions', 'uploads/submissions/lesson_5/hash.pdf', '2025-03-19 00:01:37', 85.00, 'graded'),
-(43, 1, 17, 'Recreating Spotify', 'Σε αυτήν την εργασία ξαναφτιάχνουμε το Spotify με HTML, CSS και όπου χρειαστεί JavaScript.', 'uploads/submissions/lesson_1/67e08ae58fc0a_spotify.pdf', '2025-03-23 22:27:49', NULL, 'submitted'),
+(43, 1, 17, 'Recreating Spotify', 'Σε αυτήν την εργασία ξαναφτιάχνουμε το Spotify με HTML, CSS και όπου χρειαστεί JavaScript.', 'uploads/submissions/lesson_1/67e08ae58fc0a_spotify.pdf', '2025-03-25 12:04:49', NULL, 'submitted'),
 (44, 2, 17, 'Enhancing Spotify App', 'Σε αυτήν την εργασία αναβαθμίζουμε την προηγούμενη εργασία με το Spotify app, χρησιμοποιώντας JavaScript και internal state.', 'uploads/submissions/lesson_1/67e08b5e23a31_spotify.pdf', '2025-03-23 22:29:50', NULL, 'submitted'),
-(45, 6, 17, 'Διάφορα SQL Ερωτήματα', 'Σε αυτήν την εργασία παραθέτω 50 διαφορετικά SQL ερωτήματα σε μια βάση δεδομένων τύπου MySQL. Η βάση δεδομένων έγινε με τη χρήση phpMyAdmin.', 'uploads/submissions/lesson_2/67e08e8a5f754_queries.pdf', '2025-03-23 22:43:22', NULL, 'submitted');
+(45, 6, 17, 'Διάφορα SQL Ερωτήματα', 'Σε αυτήν την εργασία παραθέτω 50 διαφορετικά SQL ερωτήματα σε μια βάση δεδομένων τύπου MySQL. Η βάση δεδομένων έγινε με τη χρήση phpMyAdmin.', 'uploads/submissions/lesson_2/67e08e8a5f754_queries.pdf', '2025-03-23 22:43:22', NULL, 'submitted'),
+(46, 8, 21, 'Firebase In-Depth', 'Το Firebase είναι μια πλατφόρμα ανάπτυξης εφαρμογών της Google που παρέχει εργαλεία και υπηρεσίες για mobile και web εφαρμογές. Προσφέρει λειτουργίες όπως real-time database, authentication, cloud storage, hosting, push notifications και analytics. Είναι ιδανικό για developers που θέλουν να δημιουργήσουν γρήγορα scalable εφαρμογές χωρίς να χρειάζονται δικούς τους servers.', 'uploads/submissions/lesson_2/67e2eb3890600_spotify.pdf', '2025-03-25 17:43:20', NULL, 'submitted');
 
 -- --------------------------------------------------------
 
@@ -247,7 +252,10 @@ INSERT INTO `teacher_lessons` (`teacher_id`, `lesson_id`) VALUES
 (18, 2),
 (18, 3),
 (18, 4),
-(18, 5);
+(18, 5),
+(22, 1),
+(22, 4),
+(22, 5);
 
 -- --------------------------------------------------------
 
@@ -282,7 +290,9 @@ INSERT INTO `users` (`id`, `email`, `username`, `password`, `role`, `created_at`
 (11, 'teacher3@uni.gr', 'teacher3', '560d4d8b173df72e813f0f1914aeb5df3240b53457000c55a1baa84fc389fa1e', 'teacher', '2025-03-18 23:53:51'),
 (12, 'teacher4@uni.gr', 'teacher4', '560d4d8b173df72e813f0f1914aeb5df3240b53457000c55a1baa84fc389fa1e', 'teacher', '2025-03-18 23:53:51'),
 (17, 'student@student.gr', 'Student1!1', '$2y$10$rC/f2KiOMv8uazmXfVkt2u.i/G7hAzPH6fW8bqD5EsMH7it.8Cptq', 'student', '2025-03-22 21:45:42'),
-(18, 'teacher@teacher.gr', 'Teacher1!1', '$2y$10$RSe1.8U2H2lnlXfI7/ktP.kps2yi8BBvThm6MjdTgh2SxbkBHRab2', 'teacher', '2025-03-22 23:14:30');
+(18, 'teacher@teacher.gr', 'Teacher1!1', '$2y$10$RSe1.8U2H2lnlXfI7/ktP.kps2yi8BBvThm6MjdTgh2SxbkBHRab2', 'teacher', '2025-03-22 23:14:30'),
+(21, 'student2@student.gr', 'Student2!2', '$2y$10$9qdyEOIwZC4ElWjICyGGFeRfUKJHhZKMkUsauKFJvSb1W6wqCYyJ.', 'student', '2025-03-25 17:38:15'),
+(22, 'teacher2@teacher.com', 'Teacher2!2', '$2y$10$ld3GcnTKYlCj1C0C8I1YX.gBKrUForliYr0PhJST26eb1SRxbY8sW', 'teacher', '2025-03-25 17:44:51');
 
 --
 -- Indexes for dumped tables
@@ -364,13 +374,13 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Constraints for dumped tables

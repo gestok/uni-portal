@@ -1,16 +1,16 @@
 // Course toggle functionality
-const populateCourses = () => {
+const enableToggling = () => {
   const courses = document.querySelectorAll(".courses .course");
 
   if (!courses.length) {
     return;
   }
 
-  courses.forEach((course, index) => {
+  courses.forEach((course) => {
     const topBar = course.querySelector(".top-bar");
     const content = course.querySelector(".content");
 
-    if (topBar && content) {     
+    if (topBar && content) {
       topBar.addEventListener("click", () => {
         // Toggle class
         topBar.classList.toggle("active");
@@ -43,7 +43,6 @@ const populateCourses = () => {
   });
 };
 
-// Κλήση των συναρτήσεων μετά την φόρτωση της σελίδας
 document.addEventListener("DOMContentLoaded", function () {
-  populateCourses();
+  enableToggling();
 });

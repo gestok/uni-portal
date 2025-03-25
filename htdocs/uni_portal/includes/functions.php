@@ -198,3 +198,96 @@ function saveUserProfile($profileData): bool
     return false;
   }
 }
+
+/**
+ * Ελέγχει αν τα στοιχεία στις παραμέτρους είναι έγκυρα και αντιστοιχούν σε χρήστη.
+ * 
+ * @return bool Επιστρέφει true αν τα στοιχεία είναι έγκυρα και αντιστοιχούν σε χρήστη, αλλιώς false.
+ */
+function loginUser(string|null $username = null, string|null $password = null): bool
+{
+  // Αν δεν υπάρχουν απαιτούμενα πεδία, σταματάμε την εκτέλεση.
+  if (!isset($username) || !isset($password)) {
+    setError("Συμπληρώστε όλα τα πεδία");
+    return false;
+  }
+
+  try {
+    $user = getUserByUsername($username);
+
+    if (!$user) {
+      setError("Λάθος email ή κωδικός");
+      return false;
+    }
+
+    if (!password_verify($password, $user['password'])) {
+      setError("Λάθος email ή κωδικός");
+      return false;
+    }
+
+    // Αποθήκευση στοιχείων χρήστη σε session
+    setUserId($user['id']);
+    setUserRole($user['role']);
+    setSuccess("Επιτυχής είσοδος!");
+
+    return true;
+  } catch (PDOException $e) {
+    setError("Σφάλμα σύνδεσης. Δοκιμάστε ξανά αργότερα.");
+    return false;
+  }
+}
+
+/**
+ * Εγγράφει έναν νέο χρήστη στη βάση δεδομένων αφού ελέγξει αν τα στοιχεία που δόθηκαν είναι έγκυρα.
+ * 
+ * @return bool Επιστρέφει true αν η εγγραφή ήταν επιτυχής, αλλιώς false
+ */
+function registerUser($username, $email, $password, $confirm_password): bool
+{
+  // Αν δεν υπάρχουν απαιτούμενα πεδία, σταματάμε την εκτέλεση.
+  if (!isset($username) || !isset($email) || !isset($password)) {
+    setError("Συμπληρώστε όλα τα υποχρεωτικά πεδία");
+    return false;
+  }
+
+  // Επιβεβαίωση ότι οι κωδικοί ταιριάζουν.
+  if ($password !== $confirm_password) {
+    setError("Οι κωδικοί δεν ταιριάζουν");
+    return false;
+  }
+
+  // Επιβεβαίωση ότι ο κωδικός είναι τουλάχιστον 10 χαρακτήρες.
+  if (strlen($password) < 10) {
+    setError("Ο κωδικός πρέπει να έχει τουλάχιστον 10 χαρακτήρες");
+    return false;
+  }
+
+  // Επιβεβαίωση ότι ο κωδικός περιέχει τουλάχιστον 1 αριθμό, 1 πεζό γράμμα, 1 κεφαλαίο γράμμα και 1 ειδικό χαρακτήρα.
+  if (
+    !preg_match('/[0-9]/', $password) ||
+    !preg_match('/[a-z]/', $password) ||
+    !preg_match('/[A-Z]/', $password) ||
+    !preg_match('/[\W_]/', $password)
+  ) {
+    setError("Ο κωδικός πρέπει να περιέχει τουλάχιστον 1 αριθμό, 1 πεζό γράμμα, 1 κεφαλαίο γράμμα και 1 ειδικό χαρακτήρα");
+    return false;
+  }
+
+  // Έλεγχος αν το username ή το email χρησιμοποιούνται ήδη
+  if (checkUserExists($username, $email)) {
+    setError("Το username ή email χρησιμοποιείται ήδη");
+    return false;
+  }
+
+  // Hash του κωδικού πρόσβασης
+  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+  $role = 'student'; // Προεπιλεγμένος ρόλος
+
+  if (insertUser($username, $email, $hashed_password, $role)) {
+    setSuccess("Επιτυχής εγγραφή! Μπορείτε να συνδεθείτε.");
+    return true;
+  } else {
+    setError("Σφάλμα κατά την εγγραφή. Δοκιμάστε ξανά.");
+    return false;
+  }
+}

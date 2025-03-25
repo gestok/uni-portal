@@ -10,6 +10,5 @@ try {
   // Ρύθμιση του PDO ώστε να πετάει εξαιρέσεις σε περίπτωση σφάλματος
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-  // Διαχείριση σφάλματος σύνδεσης
   die("Σφάλμα σύνδεσης: " . $e->getMessage());
 }

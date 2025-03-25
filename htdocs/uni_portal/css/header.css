@@ -1,0 +1,58 @@
+#masthead {
+  background-color: var(--gray-100);
+}
+
+#masthead .header-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+#masthead .logo {
+  display: flex;
+  transform: scale(1, 1);
+  transition: transform 0.3s ease;
+}
+
+#masthead .logo:hover {
+  transform: scale(0.9, 0.9);
+}
+
+#masthead .logo img {
+  width: 100%;
+  max-width: 48px;
+}
+
+#masthead .navigation {
+  margin-left: auto;
+  display: flex;
+  column-gap: 20px;
+}
+
+#masthead .navigation a {
+  font-size: 14px;
+  color: var(--gray-40);
+  transition: color 0.3s ease;
+}
+
+#masthead .navigation .active,
+#masthead .navigation a:hover {
+  color: var(--text-color);
+}
+
+#masthead .cta {
+  display: flex;
+  margin-left: 20px;
+}
+
+#masthead .cta .fa-solid {
+  font-size: 14px;
+  color: var(--gray-40);
+  transition: color 0.3s ease;
+}
+
+#masthead .cta .fa-solid:hover {
+  color: var(--text-color);
+}

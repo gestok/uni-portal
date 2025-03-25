@@ -1,48 +1,43 @@
 <?php
-// Φόρτωμα εγγεγραμμένων μαθημάτων
-$enrolledLessons = getStudentLessons();
-// Φόρτωμα εργασιών για το συγκεκριμένο μάθημα (εάν έχει επιλεχθεί μάθημα)
-$assignments = getLessonAssignments($_GET['lesson_id'] ?? null);
-// Φόρτωμα τελευταίας υποβολής για το συγκεκριμένο μάθημα και εργασία (εάν έχει επιλεχθεί εργασία και υπάρχει υποβολή)
-$submission = getAssignmentSubmission($_GET['assignment_id'] ?? null);
-
+// Αρχικοποίηση μεταβλητής υποβολής
+$submission = [];
 // Αν η υποβολή είναι POST
 if (isPostRequest()) {
+  // Ενημέρωση μεταβλητής υποβολής
   $submission = [
-    'assignment_id' => $_POST['assignment_id'],
-    'lesson_id' => $_POST['lesson_id'],
+    'assignment_id' => $_POST['assignment_id'] ?? null,
+    'lesson_id' => $_POST['lesson_id'] ?? null,
     'title' => trim(filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING)) ?? null,
     'description' => trim(filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING)) ?? null,
   ];
   $file = $_FILES['file'];
+  // Μεταφόρτωση υποβολής
   uploadSubmission($submission, $file);
-  redirectTo(BASE_URL . "/uploader?lesson_id={$_POST['lesson_id']}&assignment_id={$_POST['assignment_id']}");
 }
+// Φόρτωση εγγεγραμμένων μαθημάτων
+$enrolledLessons = getStudentLessons();
+// Φόρτωση εργασιών για το συγκεκριμένο μάθημα (εάν έχει επιλεχθεί μάθημα)
+$assignments = getLessonAssignments($_GET['lesson_id'] ?? $_POST['lesson_id'] ?? null);
+// Φόρτωση τελευταίας υποβολής για το συγκεκριμένο μάθημα και εργασία (εάν έχει επιλεχθεί εργασία και υπάρχει υποβολή)
+$submission = getAssignmentSubmission($_GET['assignment_id'] ?? $_POST['assignment_id'] ?? null);
 ?>
 
 <main class="container uploader mt-3 mb-3">
-  <h1 class="title text-center">Υποβολή Εργασίας</h1>
-  <p class="text-center">
-    Υποβάλετε μια νέα εργασία, αφού πρώτα επιλέξετε το σωστό μάθημα.
-  </p>
+  <div class="title text-center">Υποβολή Εργασίας</div>
 
   <!-- Φόρμα υποβολής -->
   <form method="post"
         enctype="multipart/form-data"
-        class="uploader-wrapper">
+        class="form-wrapper">
 
-    <!-- Μάθημα -->
-    <label class="info-wrapper">
-      <!-- Τίτλος -->
-      <div class="title">Μάθημα *</div>
-
-      <!-- Επιλογή -->
+      <!-- Επιλογή Μαθήματος -->
+       <?php if (!empty($enrolledLessons)): ?>
       <select name="lesson_id"
               required
               id="lessonSelect"
               class="course">
         <!-- Placeholder -->
-        <option value="">Επιλέξτε μάθημα</option>
+        <option value="">Επιλέξτε μάθημα *</option>
 
         <!-- Επιλογές -->
         <?php foreach ($enrolledLessons as $lesson): ?>
@@ -52,20 +47,15 @@ if (isPostRequest()) {
           </option>
         <?php endforeach; ?>
       </select>
-    </label>
+      <?php endif; ?>
 
-    <!-- Εργασία -->
-    <label class="info-wrapper">
-      <!-- Τίτλος -->
-      <div class="title">Εργασία *</div>
-
-      <!-- Επιλογή -->
+      <!-- Επιλογή Εργασίας -->
       <select name="assignment_id"
               required
               id="assignmentSelect"
               class="work">
         <!-- Placeholder -->
-        <option value="">Επιλέξτε εργασία</option>
+        <option value="">Επιλέξτε εργασία *</option>
 
         <!-- Επιλογές -->
         <?php foreach ($assignments as $assignment): ?>
@@ -75,34 +65,21 @@ if (isPostRequest()) {
           </option>
         <?php endforeach; ?>
       </select>
-    </label>
 
-    <!-- Τίτλος Εργασίας Φοιτητή -->
-    <label class="info-wrapper">
-      <!-- Τίτλος -->
-      <div class="title">Τίτλος *</div>
-
-      <!-- Τιμή -->
+      <!-- Τίτλος Υποβολής -->
       <input type="text"
              name="title"
              required
              value="<?php echo htmlspecialchars($submission['title'] ?? ''); ?>"
-             placeholder="Πληκτρολογήστε τον τίτλο της εργασίας" />
-    </label>
+             placeholder="Πληκτρολογήστε τον τίτλο της εργασίας *" />
 
-    <!-- Περιγραφή Εργασίας Φοιτητή -->
-    <label class="info-wrapper">
-      <!-- Τίτλος -->
-      <div class="title">Περιγραφή *</div>
-
-      <!-- Τιμή -->
+      <!-- Περιγραφή Υποβολής -->
       <textarea name="description"
                 rows="5"
                 required
-                placeholder="Πληκτρολογήστε την περιγραφή της εργασίας"><?php
+                placeholder="Πληκτρολογήστε την περιγραφή της εργασίας *"><?php
                 echo htmlspecialchars($submission['description'] ?? '');
                 ?></textarea>
-    </label>
 
     <!-- Upload -->
     <label class="custom-file-upload position-relative">
@@ -121,7 +98,7 @@ if (isPostRequest()) {
       <?php if (isset($submission['file_path'])): ?>
         <a href="<?php echo BASE_URL . '/' . $submission['file_path']; ?>"
            download
-           class="cta-button">
+           class="btn primary">
           <!-- Εικονίδιο -->
           <i class="fa-solid fa-download fa-sm"></i>
 
@@ -132,7 +109,7 @@ if (isPostRequest()) {
 
       <!-- Υποβολή -->
       <button type="submit"
-              class="cta-button">
+              class="btn secondary">
         <!-- Εικονίδιο -->
         <i class="fa-solid fa-save fa-sm"></i>
 

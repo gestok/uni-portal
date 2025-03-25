@@ -1,78 +1,36 @@
 <?php
-// Φόρτωση υποβολών φοιτητή
-$lessons = [];
-try {
-  // Ερώτημα για εύρεση υποβολών του φοιτητή σε μαθήματα που έχει εγγραφεί
-  $sql = "SELECT l.id, l.title, l.description,
-                 a.id AS assignment_id, a.title AS assignment_title,
-                 a.description AS assignment_description, a.thumbnail, a.deadline,
-                 s.id AS submission_id, s.title AS submission_title,
-                 s.description AS submission_description, s.file_path, s.submitted_at, s.grade, s.status
-        FROM student_lessons sl
-        JOIN lessons l ON sl.lesson_id = l.id
-        LEFT JOIN assignments a ON l.id = a.lesson_id
-        LEFT JOIN submissions s ON a.id = s.assignment_id AND s.user_id = ?
-        WHERE sl.student_id = ?
-        ORDER BY l.title, a.id";
+// Φόρτωση μαθημάτων φοιτητή
+$lessons = getStudentEnrolledLessons(getUserId());
 
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute([getUserId(), getUserId()]);
-  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Φόρτωση εργασιών μαθημάτων
+foreach ($lessons as &$lesson) {
+  $lesson['assignments'] = getLessonAssignments($lesson['id']);
 
-  // Ομαδοποίηση δεδομένων
-  foreach ($results as $lesson) {
-    $lessonId = $lesson['id'];
-    if (!isset($lessons[$lessonId])) {
-      $lessons[$lessonId] = [
-        'title' => $lesson['title'],
-        'description' => $lesson['description'],
-        'assignments' => []
-      ];
-    }
-
-    if ($lesson['assignment_id']) {
-      $lessons[$lessonId]['assignments'][$lesson['assignment_id']] = [
-        'assignment' => [
-          'id' => $lesson['assignment_id'],
-          'title' => $lesson['assignment_title'],
-          'description' => $lesson['assignment_description'],
-          'thumbnail' => $lesson['thumbnail'],
-          'deadline' => $lesson['deadline']
-        ],
-        'submission' => $lesson['submission_id'] ? [
-          'id' => $lesson['submission_id'],
-          'title' => $lesson['submission_title'],
-          'description' => $lesson['submission_description'],
-          'file' => $lesson['file_path'],
-          'date' => $lesson['submitted_at'],
-          'grade' => $lesson['grade'],
-          'status' => $lesson['status']
-        ] : null
-      ];
+  // Φόρτωση υποβολών εργασιών για κάθε εργασία
+  foreach ($lesson['assignments'] as &$assignment) {
+    if (!empty(getAssignmentSubmission($assignment['id']))) {
+      $assignment['submission'] = getAssignmentSubmission($assignment['id']);
     }
   }
-} catch (PDOException $e) {
-  die("Σφάλμα φόρτωσης υποβολών: " . $e->getMessage());
 }
+// Απελευθέρωση αναφορών
+unset($lesson);
+unset($assignment);
 ?>
 
 <main class="container portfolio mt-3 mb-3">
   <!-- Μπάρα -->
   <div class="header">
-
-    <!-- Τίτλος -->
-    <span class="title user-select-none pe-none">Μάθημα</span>
-
     <!-- Νέα Υποβολή -->
     <a href="<?php echo BASE_URL; ?>/uploader"
-       class="upload-btn user-select-none">
-      <i class="fas fa-upload icon"></i>
+       class="btn secondary small user-select-none">
+      <i class="fa-solid fa-upload fa-sm"></i>
       <span>Νέα υποβολή</span>
     </a>
   </div>
 
   <!-- Μαθήματα -->
-  <div class="courses mt-2">
+  <div class="courses">
 
     <!-- Λούπα για κάθε μάθημα που παρακολουθεί ο φοιτητής με ενεργές εργασίες -->
     <?php foreach ($lessons as $lesson): ?>
@@ -88,9 +46,7 @@ try {
             <span class="description"><?php echo htmlspecialchars($lesson['description']); ?></span>
 
             <!-- Εικονίδιο -->
-            <div class="icon">
-              <i class="fa-solid fa-plus"></i>
-            </div>
+            <i class="fa-solid fa-plus fa-lg"></i>
           </div>
 
           <!-- Εργασίες Μαθήματος -->
@@ -101,27 +57,27 @@ try {
             foreach ($lesson['assignments'] as $assignment): ?>
               <div class="work-wrapper <?php echo $index % 2 === 0 ? 'even' : 'odd'; ?>">
                 <!-- Thumbnail -->
-                <img src="<?php echo BASE_URL . '/uploads/thumbnails/' . $assignment['assignment']['thumbnail']; ?>"
+                <img src="<?php echo BASE_URL . '/uploads/thumbnails/' . $assignment['thumbnail']; ?>"
                      class="thumbnail user-select-none pe-none" />
 
                 <!-- Πληροφορίες Εργασίας -->
                 <div class="info">
 
                   <!-- Τίτλος -->
-                  <h2 class="title">
-                    <?php echo htmlspecialchars($assignment['assignment']['title']); ?>
-                  </h2>
+                  <div class="title">
+                    <?php echo htmlspecialchars($assignment['title']); ?>
+                  </div>
 
                   <!-- Περιγραφή -->
                   <div class="subtitle">
-                    <?php echo htmlspecialchars($assignment['assignment']['description']); ?>
+                    <?php echo htmlspecialchars($assignment['description']); ?>
                   </div>
 
                   <!-- Υποβολή -->
-                  <?php if ($assignment['submission']): ?>
+                  <?php if (isset($assignment['submission'])): ?>
                     <div class="submission-details">
                       <!-- Τίτλος -->
-                      <div class="description">
+                      <div class="title">
                         <?php echo htmlspecialchars($assignment['submission']['title']); ?>
                       </div>
 
@@ -131,16 +87,16 @@ try {
                       </div>
 
                       <!-- Κατάσταση -->
-                      <span class="status <?php echo $submission['status']; ?>">
-                        <?php echo $assignment['submission']['status'] === 'submitted' ? ('Υποβλήθηκε ' . date('d/m/Y H:i', strtotime($assignment['submission']['date']))) : ($assignment['submission']['status'] === 'graded' ? 'Βαθμολογήθηκε: ' . $assignment['submission']['grade'] : 'Σε εξέλιξη'); ?>
+                      <span class="status <?php echo $assignment['submission']['status']; ?>">
+                        <?php echo $assignment['submission']['status'] === 'submitted' ? ('<i class="fa-regular fa-clock"></i> ' . date('d/m/Y H:i', strtotime($assignment['submission']['submitted_at']))) : ($assignment['submission']['status'] === 'graded' ? 'Βαθμολογήθηκε: ' . $assignment['submission']['grade'] : 'Σε εξέλιξη'); ?>
                       </span>
 
                       <!-- Λήψη -->
-                      <a href="<?php echo BASE_URL . '/' . $assignment['submission']['file']; ?>"
+                      <a href="<?php echo BASE_URL . '/' . $assignment['submission']['file_path']; ?>"
                          download
-                         class="download user-select-none">
+                         class="download btn primary inline small user-select-none">
                         <!-- Εικονίδιο -->
-                        <i class="fa-solid fa-download icon"></i>
+                        <i class="fa-solid fa-download fa-sm"></i>
 
                         <!-- Κείμενο -->
                         <span>Λήψη</span>
@@ -148,7 +104,7 @@ try {
                     </div>
                   <?php else:
                     // Εμφάνιση υπολυπόμενου χρόνου αν υπάρχει προθεσμία
-                    $deadline = strtotime($assignment['assignment']['deadline']);
+                    $deadline = strtotime($assignment['deadline']);
                     $now = time();
                     $timeLeft = $deadline - $now;
                     $daysLeft = floor($timeLeft / (60 * 60 * 24));
@@ -157,11 +113,15 @@ try {
 
                     if ($timeLeft > 0): ?>
                       <div class="deadline">
-                        <span>
-                          Υποβολή μέχρι: <?php echo date('d/m/Y', $deadline); ?>
+                        <!-- Ημερομηνία Υποβολής -->
+                        <span class="date">
+                          <i class="fa-regular fa-clock"></i>
+                          <span>Υποβολή: <?php echo date('d/m/Y', $deadline); ?></span>
                         </span>
-                        <span>
-                          Προθεσμία: <?php echo "$daysLeft ημέρες, $hoursLeft ώρες, $minutesLeft λεπτά"; ?>
+
+                        <!-- Προθεσμία -->
+                        <span class="remaining">
+                          <?php echo "$daysLeft ημέρες, $hoursLeft ώρες, $minutesLeft λεπτά"; ?>
                         </span>
                       </div>
                     <?php else: ?>

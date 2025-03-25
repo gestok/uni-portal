@@ -1,20 +1,23 @@
 .profile-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 20px;
   padding: 20px;
   background-color: var(--gray-80);
   border: 1px solid var(--gray-70);
   border-radius: 20px;
   margin: auto;
+  width: 100%;
+  max-width: 550px;
+  box-sizing: border-box;
 }
 
-.input-wrapper {
+.profile-wrapper .input-wrapper {
   position: relative;
   display: flex;
 }
 
-.icon {
+.profile-wrapper .input-wrapper .icon {
   position: absolute;
   top: 50%;
   left: 10px;
@@ -29,7 +32,7 @@
   pointer-events: none;
 }
 
-input {
+.profile-wrapper .input-wrapper input {
   color: var(--gray-10);
   border: 1px solid var(--gray-60);
   width: 100%;
@@ -43,10 +46,10 @@ input {
   transition: all 0.2s ease;
 }
 
-input:focus {
+.profile-wrapper .input-wrapper input:focus {
   border-color: var(--gray-50);
 }
 
-.btn {
+.profile-wrapper .btn {
   grid-column: 1 / -1;
 }

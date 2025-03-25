@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer>
+<footer id="colophon">
   <div class="footer-wrapper container">
     <!-- Copyright -->
     <div class="copyright"></div>

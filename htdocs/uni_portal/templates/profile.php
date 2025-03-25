@@ -1,19 +1,7 @@
 <?php
 // Επεξεργασία υποβολής φόρμας
 if (isPostRequest() && isset($_POST['save_profile'])) {
-  $profileData = [
-    'fullname' => $_POST['fullname'] ?? '',
-    'job' => $_POST['job'] ?? '',
-    'email' => $_POST['email'] ?? '',
-    'mobile' => $_POST['mobile'] ?? '',
-    'facebook' => $_POST['facebook'] ?? '',
-    'twitter' => $_POST['twitter'] ?? '',
-    'linkedin' => $_POST['linkedin'] ?? '',
-    'instagram' => $_POST['instagram'] ?? '',
-    'youtube' => $_POST['youtube'] ?? ''
-  ];
-
-  saveUserProfile($profileData);
+  saveUserProfile($_POST);
 }
 // Φόρτωση προφίλ χρήστη
 $profile = getUserProfile();

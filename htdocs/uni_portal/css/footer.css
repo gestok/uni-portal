@@ -1,0 +1,35 @@
+#colophon {
+  background-color: var(--gray-100);
+}
+
+#colophon .footer-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#colophon .copyright {
+  font-size: 14px;
+  color: var(--gray-40);
+}
+
+#colophon .footer-link-wrapper {
+  display: flex;
+  column-gap: 10px;
+}
+
+#colophon .footer-link-wrapper .separator {
+  color: var(--gray-40);
+}
+
+#colophon .footer-link-wrapper .footer-link {
+  font-size: 14px;
+  color: var(--gray-40);
+  transition: color 0.3s ease;
+}
+
+#colophon .footer-link-wrapper .footer-link:hover {
+  color: var(--text-color);
+}
